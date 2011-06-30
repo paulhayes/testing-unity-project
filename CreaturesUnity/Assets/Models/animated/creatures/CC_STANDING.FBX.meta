@@ -1,0 +1,389 @@
+fileFormatVersion: 1
+guid: 72ac6abf45204474183a62c3a9ef949d
+ModelImporter:
+  importerVersion: 7
+  meshes:
+    scaleFactor: 0.1
+    useFileUnits: 1
+    meshCompression: 0
+    generateColliders: 0
+    swapUVs: 0
+  tangentSpace:
+    normalImportMode: 0
+    tangentImportMode: 1
+    smoothingAngle: 60
+    splitTangents: 1
+  materials:
+    generation: 2
+  animations:
+    generation: 3
+    bakeAnimations: 0
+    animationCompression: 1
+    animationWrapMode: 0
+    splitAnimations: 1
+    clips:
+      StandingBreathe:
+        firstFrame: 0
+        lastFrame: 34
+        loop: 1
+        wrapMode: 2
+      StandingScratch:
+        firstFrame: 35
+        lastFrame: 84
+        loop: 1
+        wrapMode: 2
+      StandingForage:
+        firstFrame: 85
+        lastFrame: 229
+        loop: 1
+        wrapMode: 2
+      StandingSnapAtBug:
+        firstFrame: 230
+        lastFrame: 269
+        loop: 1
+        wrapMode: 2
+      StandingShiftWeight:
+        firstFrame: 270
+        lastFrame: 304
+        loop: 1
+        wrapMode: 2
+      StandingOpenMouth:
+        firstFrame: 305
+        lastFrame: 339
+        loop: 1
+        wrapMode: 2
+      StandingLookAround:
+        firstFrame: 340
+        lastFrame: 419
+        loop: 1
+        wrapMode: 2
+      StandingCommunicate01:
+        firstFrame: 420
+        lastFrame: 484
+        loop: 1
+        wrapMode: 2
+      StandingCommunicate02:
+        firstFrame: 485
+        lastFrame: 584
+        loop: 1
+        wrapMode: 2
+      StandingToLookLeft:
+        firstFrame: 585
+        lastFrame: 609
+        loop: 0
+        wrapMode: 1
+      StandingToLookRight:
+        firstFrame: 750
+        lastFrame: 774
+        loop: 0
+        wrapMode: 1
+      LookLeftBreathe:
+        firstFrame: 610
+        lastFrame: 644
+        loop: 1
+        wrapMode: 2
+      LookLeftLookAround:
+        firstFrame: 645
+        lastFrame: 689
+        loop: 1
+        wrapMode: 2
+      LookLeftMouthOpen:
+        firstFrame: 690
+        lastFrame: 724
+        loop: 1
+        wrapMode: 2
+      LookLeftToStanding:
+        firstFrame: 725
+        lastFrame: 749
+        loop: 0
+        wrapMode: 1
+      LookRightBreathe:
+        firstFrame: 775
+        lastFrame: 824
+        loop: 1
+        wrapMode: 2
+      LookRightLookAround:
+        firstFrame: 825
+        lastFrame: 874
+        loop: 1
+        wrapMode: 2
+      LookRightMouthOpen:
+        firstFrame: 875
+        lastFrame: 899
+        loop: 1
+        wrapMode: 2
+      LookRightToStanding:
+        firstFrame: 900
+        lastFrame: 924
+        loop: 0
+        wrapMode: 1
+  nodeInfo:
+    Bip001 L Toe0Nub:
+    - 100000
+    - 400000
+    Bip001 L HorseLink:
+    - 100002
+    - 400002
+    Bip001 L Toe01:
+    - 100004
+    - 400004
+    Bip001 L Thigh:
+    - 100006
+    - 400006
+    Bip001 L Foot:
+    - 100008
+    - 400008
+    Bip001 Pelvis:
+    - 100010
+    - 400010
+    Bip001 L Calf:
+    - 100012
+    - 400012
+    Bip001:
+    - 100014
+    - 400014
+    Bip001 Spine:
+    - 100016
+    - 400016
+    Bip001 Footsteps:
+    - 100018
+    - 400018
+    default:
+    - 100020
+    - 400020
+    - 13700000
+    //RootNode:
+    - 100022
+    - 400022
+    - 11100000
+    Bip001 R Finger0Nub:
+    - 100024
+    - 400024
+    Bip001 R Forearm:
+    - 100026
+    - 400026
+    Bip001 R Clavicle:
+    - 100028
+    - 400028
+    Bip001 R Hand:
+    - 100030
+    - 400030
+    Bip001 L Finger0:
+    - 100032
+    - 400032
+    Bip001 R UpperArm:
+    - 100034
+    - 400034
+    Bip001 L Forearm:
+    - 100036
+    - 400036
+    Bip001 L Finger0Nub:
+    - 100038
+    - 400038
+    Bip001 L Clavicle:
+    - 100040
+    - 400040
+    Bip001 L Hand:
+    - 100042
+    - 400042
+    Bip001_right head feathers:
+    - 100044
+    - 400044
+    Bip001 L UpperArm:
+    - 100046
+    - 400046
+    Bip001_tongue5:
+    - 100048
+    - 400048
+    Bip001_nose001:
+    - 100050
+    - 400050
+    Bip001_tongue3:
+    - 100052
+    - 400052
+    Bip001_left head feathers:
+    - 100054
+    - 400054
+    Bip001_tongue1:
+    - 100056
+    - 400056
+    Bip001_tongue4:
+    - 100058
+    - 400058
+    Bip001_nutsack high:
+    - 100060
+    - 400060
+    Bip001_tongue2:
+    - 100062
+    - 400062
+    Bip001 Ponytail2Nub:
+    - 100064
+    - 400064
+    Bip001_nutsack low:
+    - 100066
+    - 400066
+    Bip001 Ponytail22:
+    - 100068
+    - 400068
+    Bip001_lower jaw:
+    - 100070
+    - 400070
+    Bip001 Ponytail2:
+    - 100072
+    - 400072
+    Bip001 Ponytail23:
+    - 100074
+    - 400074
+    Bip001 Ponytail13:
+    - 100076
+    - 400076
+    Bip001 Ponytail21:
+    - 100078
+    - 400078
+    Bip001 Ponytail11:
+    - 100080
+    - 400080
+    Bip001 Ponytail1Nub:
+    - 100082
+    - 400082
+    Bip001 HeadNub:
+    - 100084
+    - 400084
+    Bip001 Ponytail12:
+    - 100086
+    - 400086
+    Bip001 Neck4:
+    - 100088
+    - 400088
+    Bip001 Ponytail1:
+    - 100090
+    - 400090
+    Bip001 Neck2:
+    - 100092
+    - 400092
+    Bip001 Head:
+    - 100094
+    - 400094
+    Bip001 Neck:
+    - 100096
+    - 400096
+    Bip001 Neck3:
+    - 100098
+    - 400098
+    Bip001 Tail1:
+    - 100100
+    - 400100
+    Bip001 Neck1:
+    - 100102
+    - 400102
+    Bip001 R Toe22:
+    - 100104
+    - 400104
+    Bip001 TailNub:
+    - 100106
+    - 400106
+    Bip001 R Toe2:
+    - 100108
+    - 400108
+    Bip001 Tail:
+    - 100110
+    - 400110
+    Bip001 R Toe2Nub:
+    - 100112
+    - 400112
+    Bip001 R Toe12:
+    - 100114
+    - 400114
+    Bip001 R Toe21:
+    - 100116
+    - 400116
+    Bip001 R Toe1:
+    - 100118
+    - 400118
+    Bip001 R Toe1Nub:
+    - 100120
+    - 400120
+    Bip001 R Toe02:
+    - 100122
+    - 400122
+    Bip001 R Toe11:
+    - 100124
+    - 400124
+    Bip001 R Toe0:
+    - 100126
+    - 400126
+    Bip001 R Toe0Nub:
+    - 100128
+    - 400128
+    Bip001 R HorseLink:
+    - 100130
+    - 400130
+    Bip001 R Toe01:
+    - 100132
+    - 400132
+    Bip001 R Thigh:
+    - 100134
+    - 400134
+    Bip001 R Foot:
+    - 100136
+    - 400136
+    Bip001 L Toe22:
+    - 100138
+    - 400138
+    Bip001 R Calf:
+    - 100140
+    - 400140
+    Bip001 L Toe2:
+    - 100142
+    - 400142
+    Bip001 L Toe2Nub:
+    - 100144
+    - 400144
+    Bip001 L Toe12:
+    - 100146
+    - 400146
+    Bip001 L Toe21:
+    - 100148
+    - 400148
+    Bip001 L Toe1:
+    - 100150
+    - 400150
+    Bip001 L Toe1Nub:
+    - 100152
+    - 400152
+    Bip001 L Toe02:
+    - 100154
+    - 400154
+    Bip001 L Toe11:
+    - 100156
+    - 400156
+    Bip001 L Toe0:
+    - 100158
+    - 400158
+    Bip001 R Finger0:
+    - 100160
+    - 400160
+AssetImporter:
+  importerVersion: 1
+  fileIDToRecycleName:
+    4300000: default
+    7400000: Take 001 //// CC_STANDING
+    7400002: StandingBreathe //// CC_STANDING
+    7400004: StandingScratch //// CC_STANDING
+    7400006: StandingForage //// CC_STANDING
+    7400008: StandingSnapAtBug //// CC_STANDING
+    7400010: StandingShiftWeight //// CC_STANDING
+    7400012: StandingOpenMouth //// CC_STANDING
+    7400014: StandingLookAround //// CC_STANDING
+    7400016: StandingCommunicate01 //// CC_STANDING
+    7400018: StandingCommunicate02 //// CC_STANDING
+    7400020: StandingToLookLeft //// CC_STANDING
+    7400022: StandingToLookRight //// CC_STANDING
+    7400024: LookLeftBreathe //// CC_STANDING
+    7400026: LookLeftLookAround //// CC_STANDING
+    7400028: LookLeftMouthOpen //// CC_STANDING
+    7400030: LookLeftToStanding //// CC_STANDING
+    7400032: LookRightBreathe //// CC_STANDING
+    7400034: LookRightLookAround //// CC_STANDING
+    7400036: LookRightMouthOpen //// CC_STANDING
+    7400038: LookRightToStanding //// CC_STANDING

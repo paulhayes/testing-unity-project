@@ -1,0 +1,45 @@
+fileFormatVersion: 1
+guid: eb1351eca94bf49d6b297efcd697a481
+labels:
+- AngryAnt
+- AI
+- ArtificialIntelligence
+- Behave
+- Behaviour
+- Behavior
+- Tree
+- Logic
+- Agent
+- Intelligence
+- Artificial
+- Bot
+- Robot
+- NPC
+- NonPlayerCharacter
+- BehaviorTree
+- BehaviourTree
+TextureImporter:
+  importerVersion: 1
+  maxTextureSize: 1024
+  textureFormat: -1
+  grayscaleToAlpha: 0
+  npotScale: 1
+  generateCubemap: 0
+  isReadable: 0
+  mipmaps:
+    generation: 1
+    correctGamma: 0
+    border: 0
+    filter: 0
+    fadeout: 0
+    fadeoutStart: 1
+    fadeoutEnd: 3
+  bumpmap:
+    generation: 0
+    bumpyness: 0.25
+    filter: 0
+  textureSettings:
+    filterMode: -1
+    anisoLevel: -1
+    mipmapBias: -1
+    wrapMode: -1
