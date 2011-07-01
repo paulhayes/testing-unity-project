@@ -29,32 +29,32 @@ ModelImporter:
         wrapMode: 1
       SittingBreathe:
         firstFrame: 50
-        lastFrame: 99
+        lastFrame: 98
         loop: 1
         wrapMode: 2
       SittingOpenMouth:
         firstFrame: 100
-        lastFrame: 119
+        lastFrame: 118
         loop: 1
         wrapMode: 2
       SittingLookSmall:
         firstFrame: 120
-        lastFrame: 169
+        lastFrame: 168
         loop: 1
         wrapMode: 2
       SittingLookLarge01:
         firstFrame: 170
-        lastFrame: 249
+        lastFrame: 248
         loop: 1
         wrapMode: 2
       SittingPrune:
         firstFrame: 250
-        lastFrame: 349
+        lastFrame: 348
         loop: 1
         wrapMode: 2
       SittingCall:
         firstFrame: 350
-        lastFrame: 399
+        lastFrame: 398
         loop: 1
         wrapMode: 2
       SittingToStanding:

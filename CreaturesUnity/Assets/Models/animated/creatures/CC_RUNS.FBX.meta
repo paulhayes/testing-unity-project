@@ -29,7 +29,7 @@ ModelImporter:
         wrapMode: 1
       RunLoop:
         firstFrame: 10
-        lastFrame: 29
+        lastFrame: 28
         loop: 1
         wrapMode: 2
       RunLoopToStanding:
