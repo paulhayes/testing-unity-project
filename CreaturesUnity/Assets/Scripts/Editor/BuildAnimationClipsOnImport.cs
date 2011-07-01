@@ -24,6 +24,7 @@ struct anim_struct{
 	public int end;
 	public string name;
 	public bool loop;
+	public string[] labels;
 	
 }
 
@@ -58,6 +59,8 @@ public class BuildAnimationClipsOnImport : AssetPostprocessor
 				newClip[i].loop = anims[i].loop;
 				newClip[i].wrapMode = (anims[i].loop) ? WrapMode.Loop : WrapMode.Once;
 				
+				//AssetDatabase.SetLabels(newClip[i], anims[i].labels);
+				
 			}
 		
 			mi.clipAnimations = newClip;
@@ -65,10 +68,19 @@ public class BuildAnimationClipsOnImport : AssetPostprocessor
 		}
 	}
 	
+	static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths) 
+	{
+		foreach (string str in importedAssets)
+            Debug.Log("Reimported Asset: " + str);
+
+        foreach (string str in deletedAssets)
+            Debug.Log("Deleted Asset: " + str);
+		
+	}
+	
 	private List<anim_struct> ParseFile(string fileName, string filter)
 	{
 	    
-	
 	    TextAsset textAsset = (TextAsset)Resources.LoadAssetAtPath(fileName, typeof(TextAsset));
 		
 		if (textAsset == null) 
@@ -94,13 +106,14 @@ public class BuildAnimationClipsOnImport : AssetPostprocessor
 				a.start = int.Parse(vals[5]);
 				a.end = int.Parse(vals[6]);
 				a.loop = bool.Parse(vals[7]);
+				a.labels = vals[10].Split(' ');
 				
 				// turn this on if looped animations are out one frame
 				if(a.loop) a.end--;
 				
 		        lines.Add(a);
 				
-				Debug.Log(a.name);
+				//Debug.Log(a.name);
 			}
 			
 			temp = reader.ReadLine();
