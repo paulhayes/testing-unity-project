@@ -123,10 +123,11 @@ public class MakeCreature : MonoBehaviour {
 	
 	    while(temp != null)
 	    {
-			if(temp.Contains(filter))
-			{
-				string[] vals = temp.Split(',');
-				
+			
+			string[] vals = temp.Split(',');
+			
+			if(filter.Equals(vals[3]))
+			{	
 				anim_struct a  = new anim_struct();
 				a.name = vals[3];
 				a.start = int.Parse(vals[5]);

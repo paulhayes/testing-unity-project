@@ -1,9 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CreatureControl/MakeCreature.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CreatureControl/AudioController.cs">
     <Files>
-      <File FileName="Assets/Scripts/CreatureControl/AudioController.cs" Line="45" Column="28" />
-      <File FileName="Assets/Scripts/CreatureControl/MakeCreature.cs" Line="104" Column="54" />
+      <File FileName="Assets/Scripts/CreatureControl/AudioController.cs" Line="8" Column="2" />
+      <File FileName="Assets/Scripts/CreatureControl/MakeCreature.cs" Line="129" Column="29" />
       <File FileName="Assets/Scripts/Editor/BuildAnimationClipsOnImport.cs" Line="19" Column="1" />
       <File FileName="Assets/Shaders/silhouette.shader" Line="16" Column="10" />
       <File FileName="Assets/Scripts/Editor/CustomImportSettings.cs" Line="1" Column="1" />

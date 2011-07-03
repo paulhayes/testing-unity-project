@@ -34,6 +34,8 @@ public class AudioController : MonoBehaviour {
 			{
 				a.clip = (AudioClip)Resources.Load(s);
 				
+				a.pitch = Random.Range(0.8f, 1.3f);
+				
 				a.Play();
 				
 				toldToPlay = true;
