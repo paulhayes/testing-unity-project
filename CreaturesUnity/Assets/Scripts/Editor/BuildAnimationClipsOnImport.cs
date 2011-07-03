@@ -18,15 +18,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
 
-struct anim_struct{
-	
-	public int start;
-	public int end;
-	public string name;
-	public bool loop;
-	public string[] labels;
-	
-}
+
 
 public class BuildAnimationClipsOnImport : AssetPostprocessor
 {	
@@ -112,8 +104,6 @@ public class BuildAnimationClipsOnImport : AssetPostprocessor
 				if(a.loop) a.end--;
 				
 		        lines.Add(a);
-				
-				//Debug.Log(a.name);
 			}
 			
 			temp = reader.ReadLine();

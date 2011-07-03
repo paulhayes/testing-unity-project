@@ -1,0 +1,19 @@
+
+using UnityEngine;
+using UnityEditor;
+using System.Collections.Generic;
+using System.IO;
+
+// ok, ok it's not a struct. But unity can't serialise structs
+[System.Serializable]
+public class anim_struct
+{
+	
+	public int start;
+	public int end;
+	public string name;
+	public bool loop;
+	public string[] labels;
+	public string audioName;
+	
+}
