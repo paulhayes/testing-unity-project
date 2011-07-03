@@ -63,6 +63,8 @@
      <None Include="Assets\Scripts\Behave\Changelog.txt" />
      <None Include="Assets\Scripts\Behave\License.txt" />
      <None Include="Assets\Scripts\Behave\Readme.txt" />
+     <Compile Include="Assets\Scripts\CreatureControl\AnimationController.cs" />
+     <Compile Include="Assets\Scripts\CreatureControl\Animation_Pool.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\AudioController.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\MakeCreature.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\anim_struct.cs" />

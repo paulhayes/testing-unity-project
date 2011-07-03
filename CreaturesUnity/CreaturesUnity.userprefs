@@ -1,12 +1,11 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CreatureControl/AudioController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CreatureControl/MakeCreature.cs">
     <Files>
-      <File FileName="Assets/Scripts/CreatureControl/AudioController.cs" Line="8" Column="2" />
-      <File FileName="Assets/Scripts/CreatureControl/MakeCreature.cs" Line="129" Column="29" />
-      <File FileName="Assets/Scripts/Editor/BuildAnimationClipsOnImport.cs" Line="19" Column="1" />
-      <File FileName="Assets/Shaders/silhouette.shader" Line="16" Column="10" />
-      <File FileName="Assets/Scripts/Editor/CustomImportSettings.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CreatureControl/MakeCreature.cs" Line="6" Column="1" />
+      <File FileName="Assets/Scripts/CreatureControl/AnimationController.cs" Line="53" Column="1" />
+      <File FileName="Assets/Scripts/CreatureControl/Animation_Pool.cs" Line="28" Column="36" />
+      <File FileName="Assets/Scripts/CreatureControl/anim_struct.cs" Line="7" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 
 
-
-
 public class MakeCreature : MonoBehaviour {
 	
 	public GameObject[] sourceModels;
@@ -25,7 +23,7 @@ public class MakeCreature : MonoBehaviour {
 	
 	
 	// Use this for initialization
-	void Start () 
+	void Awake () 
 	{
 		audioController = (AudioController)gameObject.GetComponentInChildren<AudioController>();
 		
