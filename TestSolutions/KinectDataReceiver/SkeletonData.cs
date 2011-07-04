@@ -8,6 +8,7 @@ namespace KinectViaTcp
     public class SkeletonData
     {
         //public int EnrollmentIndex;
+        public SkeletonState State;
         public List<KinectJoint> Joints;
         public Vector Position;
         //public SkeletonQuality Quality;

@@ -19,8 +19,8 @@ namespace KinectViaTcp
 
         // An event that clients can use to be notified whenever there is new Kinect Data
         public event EventHandler UpdatedSkeletonDataEvent;
-        public event EventHandler NewUserEvent;
-        public event EventHandler UserLostEvent;
+        //public event EventHandler NewUserEvent;
+        //public event EventHandler UserLostEvent;
 
         Socket socket;
         static int buffersize = 1024;
@@ -174,16 +174,18 @@ namespace KinectViaTcp
             {
                 string[] parts = message.Split('|');
                 var skeleton = new SkeletonData(int.Parse(parts[1]));
+                skeleton.State = SkeletonState.New;
                 trackedSkeletons.Add(skeleton);
-                OnNewUser(skeleton);
+                OnUpdatedSkeletonData(skeleton);
             }
             // Remove user
             else if (message.StartsWith("Remove"))
             {
                 string[] parts = message.Split('|');
                 var skeleton = new SkeletonData(int.Parse(parts[1]));
+                skeleton.State = SkeletonState.Removed;
                 trackedSkeletons.Remove(skeleton);
-                OnUserLost(skeleton);
+                OnUpdatedSkeletonData(skeleton);
             }
             else
             {
@@ -205,14 +207,14 @@ namespace KinectViaTcp
             {
                 return;
             }
-
+            skeleton.State = SkeletonState.Updated;
             for (int i = 2; i < joints.Length; i++)
             {
                 string[] subStrings = joints[i].Split(' ');
                 if (subStrings.Length == 4)
                 {
                     KinectJointID jointType = (KinectJointID)Enum.Parse(typeof(KinectJointID), subStrings[0], true);
-                    skeleton.GetJoint(jointType).Position = new Vector(float.Parse(subStrings[1]), float.Parse(subStrings[2]), float.Parse(subStrings[2]));
+                    skeleton.GetJoint(jointType).Position = new Vector(float.Parse(subStrings[1]), float.Parse(subStrings[2]), float.Parse(subStrings[3]));
 
                 }
 
@@ -240,7 +242,7 @@ namespace KinectViaTcp
         }
 
         // Invoke the NewDataEvent; called whenever list changes
-        protected virtual void OnNewUser(SkeletonData e)
+    /*    protected virtual void OnNewUser(SkeletonData e)
         {
             if (NewUserEvent != null)
                 NewUserEvent(this, e);
@@ -252,5 +254,6 @@ namespace KinectViaTcp
             if (UserLostEvent != null)
                 UserLostEvent(this, e);
         }
+     */
     }
 }

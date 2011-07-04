@@ -27,6 +27,5 @@ namespace KinectViaTcp
         KneeRight = 17,
         AnkleRight = 18,
         FootRight = 19,
-        Count = 20,
     }
 }

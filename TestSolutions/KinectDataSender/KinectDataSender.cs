@@ -12,6 +12,16 @@ namespace KinectViaTcp
 {
     class KinectDataSender
     {
+        // We want to control how depth data gets converted into false-color data
+        // for more intuitive visualization, so we keep 32-bit color frame buffer versions of
+        // these, to be updated whenever we receive and process a 16-bit frame.
+        const int RED_IDX = 2;
+        const int GREEN_IDX = 1;
+        const int BLUE_IDX = 0;
+        static byte[] depthFrame32 = new byte[320 * 240 * 4];
+
+
+
         
         static int PORT = 12345;
 
@@ -37,7 +47,7 @@ namespace KinectViaTcp
             WaitForConnectionAsync();
 
             //type enter to end the program
-            Console.WriteLine("Type ENTER to end the program.");
+            Console.WriteLine("Hit ENTER to end the program.");
             Console.ReadLine();
         }
 
@@ -115,7 +125,7 @@ namespace KinectViaTcp
 
             try
             {
-                nui.Initialize(RuntimeOptions.UseDepthAndPlayerIndex | RuntimeOptions.UseSkeletalTracking | RuntimeOptions.UseColor);
+                nui.Initialize(RuntimeOptions.UseDepthAndPlayerIndex | RuntimeOptions.UseSkeletalTracking);
             }
             catch (InvalidOperationException)
             {
@@ -126,7 +136,6 @@ namespace KinectViaTcp
 
             try
             {
-                nui.VideoStream.Open(ImageStreamType.Video, 2, ImageResolution.Resolution640x480, ImageType.Color);
                 nui.DepthStream.Open(ImageStreamType.Depth, 2, ImageResolution.Resolution320x240, ImageType.DepthAndPlayerIndex);
             }
             catch (InvalidOperationException)
@@ -139,7 +148,6 @@ namespace KinectViaTcp
 
             nui.DepthFrameReady += new EventHandler<ImageFrameReadyEventArgs>(nui_DepthFrameReady);
             nui.SkeletonFrameReady += new EventHandler<SkeletonFrameReadyEventArgs>(nui_SkeletonFrameReady);
-            nui.VideoFrameReady += new EventHandler<ImageFrameReadyEventArgs>(nui_ColorFrameReady);
         }
 
         static string getLineFromJoint(Joint joint)
@@ -161,20 +169,35 @@ namespace KinectViaTcp
 
                 if (SkeletonTrackingState.Tracked == data.TrackingState)
                 {
-                    // Add skeleton to currently tracked skeletons
-                    if (!trackedSkeletons.Contains(iSkeleton))
+                    // If skeleton is clipped at all then user has walked off screen or still coming on
+                    if (data.Quality == SkeletonQuality.ClippedLeft
+                        || data.Quality == SkeletonQuality.ClippedRight
+                        || data.Quality == SkeletonQuality.ClippedBottom
+                        || data.Quality == SkeletonQuality.ClippedTop)
                     {
-                        trackedSkeletons.Add(iSkeleton);
-                        Send(socket, "#AddUser|" + iSkeleton); 
+                        // Bad quality, so remove skeleton if it already exists
+                        if (trackedSkeletons.Contains(iSkeleton))
+                        {
+                            trackedSkeletons.Remove(iSkeleton);
+                            Send(socket, "#RemoveUser|" + iSkeleton);
+                        }
                     }
                     
-                    // data.UserIndex is possibly broken, what does it?? Use iSkeleton instead
-                    string jointText = "#User|" + iSkeleton;
-                    foreach (Joint joint in data.Joints)
+                    // Add skeleton to currently tracked skeletons
+                    else if (!trackedSkeletons.Contains(iSkeleton))
                     {
-                        jointText += getLineFromJoint(joint);
+                        trackedSkeletons.Add(iSkeleton);
+                        Send(socket, "#AddUser|" + iSkeleton);
                     }
-                    Send(socket, jointText);
+                    else
+                    {
+                        string jointText = "#User|" + iSkeleton;
+                        foreach (Joint joint in data.Joints)
+                        {
+                            jointText += getLineFromJoint(joint);
+                        }
+                        Send(socket, jointText);
+                    }
                         
                 }
                 else
@@ -210,6 +233,23 @@ namespace KinectViaTcp
                 Console.WriteLine("Disconnected.  Error: " + ex.ToString());
             }
         }
+
+        private static void SendBytes(Socket client, byte[] byteData)
+        {
+            try
+            {
+                if (socket.Connected)
+                {
+                    // Begin sending the data to the remote device.
+                    client.BeginSend(byteData, 0, byteData.Length, SocketFlags.None,
+                        new AsyncCallback(SendCallback), client);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Disconnected.  Error: " + ex.ToString());
+            }
+        }
           
         private static void SendCallback(IAsyncResult ar)
         {
@@ -233,13 +273,44 @@ namespace KinectViaTcp
 
         static void nui_DepthFrameReady(object sender, ImageFrameReadyEventArgs e)
         {
-            //Nothing, Lebowski, nothing!
+            PlanarImage Image = e.ImageFrame.Image;
+            byte[] convertedDepthFrame = GeneratePlayerOnly(Image.Bits);
+
+            //SendBytes(socket, convertedDepthFrame);
         }
 
-        static void nui_ColorFrameReady(object sender, ImageFrameReadyEventArgs e)
+        // Converts a 16-bit grayscale depth frame which includes player indexes into a 32-bit frame
+        // that displays different players in different colors
+        private static byte[] GeneratePlayerOnly(byte[] depthFrame16)
         {
-            //this method is an abyss
+            byte[] userFrame32 = new byte[320 * 240 * 4];
+
+            for (int i16 = 0, i32 = 0; i16 < depthFrame16.Length && i32 < depthFrame32.Length; i16 += 2, i32 += 4)
+            {
+                int player = depthFrame16[i16] & 0x07;
+                int realDepth = (depthFrame16[i16 + 1] << 5) | (depthFrame16[i16] >> 3);
+                // transform 13-bit depth information into an 8-bit intensity appropriate
+                // for display (we disregard information in most significant bit)
+                byte intensity = (byte)(255 - (255 * realDepth / 0x0fff));
+
+                //userFrame32[i16] = 255;
+
+                depthFrame32[i32 + RED_IDX] = 255;
+                depthFrame32[i32 + GREEN_IDX] = 255;
+                depthFrame32[i32 + BLUE_IDX] = 255;
+
+                // choose different display colors based on player
+                if (player > 0)
+                {
+                    depthFrame32[i32 + RED_IDX] = 0;
+                    depthFrame32[i32 + GREEN_IDX] = 0;
+                    depthFrame32[i32 + BLUE_IDX] = 0;
+                }
+              
+            }
+            return depthFrame32;
         }
+
     }
 
 }
