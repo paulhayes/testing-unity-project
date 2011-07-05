@@ -30,7 +30,7 @@ public class MakeCreature : MonoBehaviour {
 		// manually triggered if you kill the array
 		if(animClips.Length == 0 || animClips == null) Populate();
 		
-		StartCoroutine(PlayAnimation());
+		//StartCoroutine(PlayAnimation());
 		
 	}
 	
