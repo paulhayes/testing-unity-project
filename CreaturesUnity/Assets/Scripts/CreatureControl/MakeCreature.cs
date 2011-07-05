@@ -131,7 +131,7 @@ public class MakeCreature : MonoBehaviour {
 				a.start = int.Parse(vals[5]);
 				a.end = int.Parse(vals[6]);
 				a.loop = bool.Parse(vals[7]);
-				a.labels = vals[10].Split(' ');
+				a.labels = vals[10].ToUpper().Split(' ');
 				a.audioName = vals[8];
 				
 				// turn this on if looped animations are out one frame

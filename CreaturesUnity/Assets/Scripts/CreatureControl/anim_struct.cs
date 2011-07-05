@@ -13,6 +13,7 @@ public class anim_struct
 	public int end;
 	public string name;
 	public bool loop;
+	// TODO: replace with States.enem[]
 	public string[] labels;
 	public string audioName;
 	

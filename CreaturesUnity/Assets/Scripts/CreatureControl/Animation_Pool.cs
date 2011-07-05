@@ -8,11 +8,17 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Animation_Pool
 {
-	public string label = "";
+	// made fast and a little hacky. Should put getters and setters everywhere.
+	
+	public AnimationController parent;
+	
+	// could throw this away mostly using states
+	public string label = ""; 
 	
 	public States state;
 	
-	public bool isTransititon = false;
+	// Very important, used for the special case TRANSITION Pool
+	public bool isTransiton = false;
 	
 	public string currentPlaying = "";
 	
@@ -28,6 +34,7 @@ public class Animation_Pool
 	
 	public float currentAnimationFinishTime = 0.0f;
 	
+	// audio playback
 	AudioController audioController;
 	
 	
@@ -43,10 +50,35 @@ public class Animation_Pool
 		state = (States)System.Enum.Parse(typeof(States), label.ToUpper());
 		
 		if(label.ToLower().Equals("transition")){
-			isTransititon = true;
+			isTransiton = true;
 		}
 	}
 	
+	
+	public int GetTransitionID(States current, States target)
+	{
+		if(isTransiton){
+		
+		// fingers crossed everything is in UPPERCASE
+		// this could be avoided by converting the strings to ENUMS at load time
+		// Add that to a TODO
+			string a = current.ToString();
+			string b = target.ToString();
+			
+			for(int i = 0; i < anims.Count; i++)
+			{
+				if(anims[i].labels[1].Equals(a))
+				{
+					if(anims[i].labels[2].Equals(b))
+					{
+						return i;
+					}
+				}
+			}
+		}
+		
+		return -1;
+	}
 	
 	
 	public void AddAnim(anim_struct a){
@@ -65,13 +97,13 @@ public class Animation_Pool
 	}
 	
 	
-	public IEnumerator StartRandomPlayback(GameObject target)
+	public IEnumerator StartPlayback(GameObject target, int ID)
 	{	
 		if(Application.isPlaying)
 		{
 			while(activeAnimationPool){
 			
-				anim_struct a = GetRandomAnim();
+				anim_struct a = (ID == -1)? GetRandomAnim() : anims[ID];
 				
 				currentPlaying = a.name;
 				
@@ -84,6 +116,8 @@ public class Animation_Pool
 				currentAnimationLength = target.animation[currentPlaying].length;
 				
 				currentAnimationFinishTime = Time.time + currentAnimationLength;
+				
+				if(isTransiton) parent.leavingTransition = true;
 				
 				yield return new WaitForSeconds( currentAnimationLength );
 				
