@@ -24,47 +24,47 @@ ModelImporter:
     clips:
       StandingBreathe:
         firstFrame: 0
-        lastFrame: 34
+        lastFrame: 33
         loop: 1
         wrapMode: 2
       StandingScratch:
         firstFrame: 35
-        lastFrame: 84
+        lastFrame: 83
         loop: 1
         wrapMode: 2
       StandingForage:
         firstFrame: 85
-        lastFrame: 229
+        lastFrame: 228
         loop: 1
         wrapMode: 2
       StandingSnapAtBug:
         firstFrame: 230
-        lastFrame: 269
+        lastFrame: 268
         loop: 1
         wrapMode: 2
       StandingShiftWeight:
         firstFrame: 270
-        lastFrame: 304
+        lastFrame: 303
         loop: 1
         wrapMode: 2
       StandingOpenMouth:
         firstFrame: 305
-        lastFrame: 339
+        lastFrame: 338
         loop: 1
         wrapMode: 2
       StandingLookAround:
         firstFrame: 340
-        lastFrame: 419
+        lastFrame: 418
         loop: 1
         wrapMode: 2
       StandingCommunicate01:
         firstFrame: 420
-        lastFrame: 484
+        lastFrame: 483
         loop: 1
         wrapMode: 2
       StandingCommunicate02:
         firstFrame: 485
-        lastFrame: 584
+        lastFrame: 583
         loop: 1
         wrapMode: 2
       StandingToLookLeft:
@@ -79,17 +79,17 @@ ModelImporter:
         wrapMode: 1
       LookLeftBreathe:
         firstFrame: 610
-        lastFrame: 644
+        lastFrame: 643
         loop: 1
         wrapMode: 2
       LookLeftLookAround:
         firstFrame: 645
-        lastFrame: 689
+        lastFrame: 688
         loop: 1
         wrapMode: 2
       LookLeftMouthOpen:
         firstFrame: 690
-        lastFrame: 724
+        lastFrame: 723
         loop: 1
         wrapMode: 2
       LookLeftToStanding:
@@ -99,17 +99,17 @@ ModelImporter:
         wrapMode: 1
       LookRightBreathe:
         firstFrame: 775
-        lastFrame: 824
+        lastFrame: 823
         loop: 1
         wrapMode: 2
       LookRightLookAround:
         firstFrame: 825
-        lastFrame: 874
+        lastFrame: 873
         loop: 1
         wrapMode: 2
       LookRightMouthOpen:
         firstFrame: 875
-        lastFrame: 899
+        lastFrame: 898
         loop: 1
         wrapMode: 2
       LookRightToStanding:
