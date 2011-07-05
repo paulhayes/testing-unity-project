@@ -30,7 +30,7 @@ namespace KinectDataReceiverToFile
             InitializeComponent();
 
             // Give Server time to start ups
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(2000);
 
             Console.WriteLine("Starting data receiver.");
 
@@ -48,9 +48,13 @@ namespace KinectDataReceiverToFile
             }
             else if (skeleton.State == SkeletonState.Removed)
             {
-                Console.WriteLine("User removed: " + skeleton.UserIndex);
+                //Console.WriteLine("User removed: " + skeleton.UserIndex);
             }
-        }
+            else if (skeleton.State == SkeletonState.ImageOnly)
+            {
+                Console.WriteLine("Received Image");
+            }
+         }
          
     }
     

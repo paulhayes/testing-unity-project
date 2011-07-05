@@ -7,6 +7,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace KinectViaTcp
 {
@@ -22,14 +24,13 @@ namespace KinectViaTcp
 
 
 
-        
+
         static int PORT = 12345;
 
         //static int totalFrames = 0;
         //static int lastFrames = 0;
         //static DateTime lastTime = DateTime.MaxValue;
-        static System.Timers.Timer heyhey;
-        static System.Timers.Timer slooow;
+        static System.Timers.Timer timer;
 
         static Socket socket;
         static Runtime nui;
@@ -65,11 +66,11 @@ namespace KinectViaTcp
             socket.Listen(5);
             socket.BeginAccept(new AsyncCallback(DoAcceptTcpClientCallback), socket);
 
-            heyhey = new System.Timers.Timer(2000);
-            heyhey.Enabled = true;
-            heyhey.AutoReset = true;
-            heyhey.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            heyhey.Start();
+            timer = new System.Timers.Timer(2000);
+            timer.Enabled = true;
+            timer.AutoReset = true;
+            timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            timer.Start();
             Console.WriteLine("Enabled timer.");
         }
 
@@ -109,7 +110,7 @@ namespace KinectViaTcp
         {
             if (socket.Connected)
             {
-                string message = "yo yo yo";
+                string message = "heartbeat";
                 //sendThroughSocket(message);
                 //Console.WriteLine("Sent: " + message);
             }
@@ -149,7 +150,7 @@ namespace KinectViaTcp
             nui.DepthFrameReady += new EventHandler<ImageFrameReadyEventArgs>(nui_DepthFrameReady);
             nui.SkeletonFrameReady += new EventHandler<SkeletonFrameReadyEventArgs>(nui_SkeletonFrameReady);
         }
-
+        /*
         static string getLineFromJoint(Joint joint)
         {
             float X = joint.Position.X;
@@ -158,80 +159,112 @@ namespace KinectViaTcp
 
             return "|" + joint.ID + " " + X + " " + Y + " " + Z;
         }
+         */
 
         static void nui_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             SkeletonFrame skeletonFrame = e.SkeletonFrame;
-            int iSkeleton = 0;          
-            foreach (SkeletonData data in skeletonFrame.Skeletons)
+            int iSkeleton = 0;
+            foreach (Microsoft.Research.Kinect.Nui.SkeletonData data in skeletonFrame.Skeletons)
             {
                 //Console.WriteLine("User: " + data.UserIndex + " is: " + data.TrackingState);
 
+
                 if (SkeletonTrackingState.Tracked == data.TrackingState)
                 {
+                    var skeletonToSend = new KinectViaTcp.SkeletonData(iSkeleton);
+                    bool sendPacket = false;
+
                     // If skeleton is clipped at all then user has walked off screen or still coming on
                     if (data.Quality == SkeletonQuality.ClippedLeft
                         || data.Quality == SkeletonQuality.ClippedRight
                         || data.Quality == SkeletonQuality.ClippedBottom
                         || data.Quality == SkeletonQuality.ClippedTop)
                     {
-                        // Bad quality, so remove skeleton if it already exists
+                        // Bad quality, so remove skeleton if it already exists as user has walked off
                         if (trackedSkeletons.Contains(iSkeleton))
                         {
                             trackedSkeletons.Remove(iSkeleton);
-                            Send(socket, "#RemoveUser|" + iSkeleton);
+                            skeletonToSend.State = SkeletonState.Removed;
+                            sendPacket = true;
+                            //Send(socket, "#RemoveUser|" + iSkeleton);
+                        }
+                        else
+                        {
+                            // Otherwise do nothing with this skeleton until it becomes FULL
+                            sendPacket = false;
                         }
                     }
-                    
-                    // Add skeleton to currently tracked skeletons
+
+                    // Else if we have a FULL skeleton then ADD or UPDATE it!
                     else if (!trackedSkeletons.Contains(iSkeleton))
                     {
                         trackedSkeletons.Add(iSkeleton);
-                        Send(socket, "#AddUser|" + iSkeleton);
+                        skeletonToSend.Position = new Vector(data.Position.X, data.Position.Y, data.Position.Z);
+                        skeletonToSend.State = SkeletonState.New;
+                        sendPacket = true;
+                        //Send(socket, "#AddUser|" + iSkeleton);
                     }
                     else
                     {
-                        string jointText = "#User|" + iSkeleton;
+                        //string jointText = "#User|" + iSkeleton;
                         foreach (Joint joint in data.Joints)
                         {
-                            jointText += getLineFromJoint(joint);
+                            //jointText += getLineFromJoint(joint);
+                            KinectJointID jointType = (KinectJointID)Enum.Parse(typeof(KinectJointID), joint.ID.ToString(), true);
+                            Vector position = new Vector(joint.Position.X, joint.Position.Y, joint.Position.Z);
+                            skeletonToSend.GetJoint(jointType).Position = position;
                         }
-                        Send(socket, jointText);
+                        skeletonToSend.Position = new Vector(data.Position.X, data.Position.Y, data.Position.Z);
+                        skeletonToSend.State = SkeletonState.Updated;
+                        sendPacket = true;
+
+                        //Send(socket, jointText);
                     }
-                        
-                }
-                else
-                {
-                    if (trackedSkeletons.Contains(iSkeleton))
+
+                    if (sendPacket)
                     {
-                        trackedSkeletons.Remove(iSkeleton);
-                        Send(socket, "#RemoveUser|" + iSkeleton);
+                        // Serialise skeleton and send it through the socket
+                        //TEST SERIALISTATION
+                       // byte[] skeletonBytes = ObjectToByteArray(skeletonToSend);
+                        //var testSkeleton = ByteArrayToObject(testArray) as SkeletonData;
+                     //   Console.WriteLine("Skeleton size: {0}", skeletonBytes.Length);
+
+                        SendBytes(socket, ObjectToByteArray(skeletonToSend));
+                        KinectJoint tempJoint = skeletonToSend.GetJoint(KinectJointID.HipCenter);
+
+                        Console.WriteLine("User: {0}, State: {1}, HipCenter X: {2}, Y: {3}, Z: {4}",
+                            skeletonToSend.UserIndex, skeletonToSend.State.ToString(),
+                            tempJoint.Position.X,
+                            tempJoint.Position.Y,
+                            tempJoint.Position.Z);
                     }
                 }
+                // If we were tracking skeleton and its state has gone bad then remove it..
+                // May cause removal to occur twice??
+                /*
+                else if (trackedSkeletons.Contains(iSkeleton))
+                {
+                    var skeletonToSend = new KinectViaTcp.SkeletonData(iSkeleton);
+
+                    trackedSkeletons.Remove(iSkeleton);
+                    skeletonToSend.State = SkeletonState.Removed;
+
+                    //Send(socket, "#RemoveUser|" + iSkeleton);
+
+                    // Serialise skeleton and send it through the socket
+                    //TEST SERIALISTATION
+                    byte[] skeletonBytes = ObjectToByteArray(skeletonToSend);
+                    //var testSkeleton = ByteArrayToObject(testArray) as SkeletonData;
+                    Console.WriteLine("Skeleton size: {0}", skeletonBytes.Length);
+
+
+                    SendBytes(socket, ObjectToByteArray(skeletonBytes));
+                }*/
+
                 iSkeleton++;
             } // for each skeleton
 
-        }
-
-
-        private static void Send(Socket client, String data)
-        {
-            try
-            {
-                if (socket.Connected)
-                {
-                    // Convert the string data to byte data using ASCII encoding.
-                    byte[] byteData = Encoding.ASCII.GetBytes(data);
-
-                    // Begin sending the data to the remote device.
-                    client.BeginSend(byteData, 0, byteData.Length, SocketFlags.None,
-                        new AsyncCallback(SendCallback), client);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Disconnected.  Error: " + ex.ToString());
-            }
         }
 
         private static void SendBytes(Socket client, byte[] byteData)
@@ -250,7 +283,7 @@ namespace KinectViaTcp
                 Console.WriteLine("Disconnected.  Error: " + ex.ToString());
             }
         }
-          
+
         private static void SendCallback(IAsyncResult ar)
         {
             try
@@ -274,16 +307,26 @@ namespace KinectViaTcp
         static void nui_DepthFrameReady(object sender, ImageFrameReadyEventArgs e)
         {
             PlanarImage Image = e.ImageFrame.Image;
-            byte[] convertedDepthFrame = GeneratePlayerOnly(Image.Bits);
 
-            //SendBytes(socket, convertedDepthFrame);
+            var imageSkeleton = GeneratePlayerOnly(Image.Bits);
+            if(imageSkeleton != null)
+            {
+
+            //Console.WriteLine("Image bytes. {0}", convertedDepthFrame.Length);
+                byte[] skeletonBytes = ObjectToByteArray(imageSkeleton);
+                //var testSkeleton = ByteArrayToObject(testArray) as SkeletonData;
+               // Console.WriteLine("Skeleton size: {0}", skeletonBytes.Length);
+                SendBytes(socket, skeletonBytes);
+
+            }
         }
 
         // Converts a 16-bit grayscale depth frame which includes player indexes into a 32-bit frame
         // that displays different players in different colors
-        private static byte[] GeneratePlayerOnly(byte[] depthFrame16)
+        private static SkeletonData GeneratePlayerOnly(byte[] depthFrame16)
         {
             byte[] userFrame32 = new byte[320 * 240 * 4];
+            bool hasPlayer = false;
 
             for (int i16 = 0, i32 = 0; i16 < depthFrame16.Length && i32 < depthFrame32.Length; i16 += 2, i32 += 4)
             {
@@ -302,14 +345,47 @@ namespace KinectViaTcp
                 // choose different display colors based on player
                 if (player > 0)
                 {
+                    hasPlayer = true;
                     depthFrame32[i32 + RED_IDX] = 0;
                     depthFrame32[i32 + GREEN_IDX] = 0;
                     depthFrame32[i32 + BLUE_IDX] = 0;
                 }
-              
+
             }
-            return depthFrame32;
+            if (hasPlayer)
+            {
+                var imageSkeleton = new SkeletonData(1);
+                imageSkeleton.State = SkeletonState.ImageOnly;
+                imageSkeleton.UserImage = depthFrame32;
+                return imageSkeleton;
+            }
+            return null;
         }
+
+        // Serialise SkeletonData
+
+        // Convert an object to a byte array
+        private static byte[] ObjectToByteArray(Object obj)
+        {
+            if (obj == null)
+                return null;
+            BinaryFormatter bf = new BinaryFormatter();
+            MemoryStream ms = new MemoryStream();
+            bf.Serialize(ms, obj);
+            return ms.ToArray();
+        }
+
+        // Convert a byte array to an Object
+        private static Object ByteArrayToObject(byte[] arrBytes)
+        {
+            MemoryStream memStream = new MemoryStream();
+            BinaryFormatter binForm = new BinaryFormatter();
+            memStream.Write(arrBytes, 0, arrBytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            Object obj = (Object)binForm.Deserialize(memStream);
+            return obj;
+        }
+
 
     }
 

@@ -5,6 +5,7 @@ using System.Text;
 
 namespace KinectViaTcp
 {
+    [Serializable]
     public enum KinectJointID
     {
         HipCenter = 0,

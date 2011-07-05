@@ -5,16 +5,14 @@ using System.Text;
 
 namespace KinectViaTcp
 {
+    [Serializable]
     public class SkeletonData
     {
-        //public int EnrollmentIndex;
         public SkeletonState State;
         public List<KinectJoint> Joints;
         public Vector Position;
-        //public SkeletonQuality Quality;
-        //public int TrackingID;
-        //public SkeletonTrackingState TrackingState;
         public int UserIndex;
+        public byte[] UserImage = new byte[320 * 240 * 4];
 
         public SkeletonData(int userId)
         {

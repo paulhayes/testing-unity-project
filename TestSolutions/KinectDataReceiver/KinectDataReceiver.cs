@@ -5,17 +5,20 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace KinectViaTcp
 {
     // A delegate type for hooking up change notifications.
     public delegate void EventHandler(object sender, SkeletonData e);
 
-
+    
 
     public class KinectDataReceiver
     {
         public List<SkeletonData> trackedSkeletons = new List<SkeletonData>();
+        public List<byte> transmissionBuffer = new List<byte>();
 
         // An event that clients can use to be notified whenever there is new Kinect Data
         public event EventHandler UpdatedSkeletonDataEvent;
@@ -48,19 +51,21 @@ namespace KinectViaTcp
         public KinectDataReceiver(string ipAsString)
         {
             localhostIP = IPAddress.Parse(ipAsString);
+            //while (true)
+            //{
+                socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                //socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
 
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            //socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+                //print("Establishing Connection to "+localhostIP.ToString());
 
-            //print("Establishing Connection to "+localhostIP.ToString());
+                EndPoint remoteEP = new IPEndPoint(localhostIP, PORT);
 
-            EndPoint remoteEP = new IPEndPoint(localhostIP, PORT);
+                // Connect to remote machine
+                Connect(remoteEP, socket);
 
-            // Connect to remote machine
-            Connect(remoteEP, socket);
-
-            // Connected, begin receiving
-            Receive(socket);
+                // Connected, begin receiving
+                Receive(socket);
+            //}
         }
 
         public void Connect(EndPoint remoteEP, Socket client)
@@ -111,6 +116,9 @@ namespace KinectViaTcp
             }
         }
 
+
+
+
         private void ReceiveCallback(IAsyncResult ar)
         {
             try
@@ -123,6 +131,33 @@ namespace KinectViaTcp
                 int bytesRead = client.EndReceive(ar);
                 if (bytesRead > 0)
                 {
+                    for (int i = 0; i < bytesRead; i++)
+                    {
+                        transmissionBuffer.Add(state.buffer[i]);
+                    }
+ 
+                    //we need to read again if this is true
+                    if (bytesRead == state.buffer.Length)
+                    {
+                        client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReceiveCallback), state);
+                    }
+                    else
+                    {
+                        // Remove header 
+                       // transmissionBuffer.RemoveRange(0, 27);
+                      //  transmissionBuffer.RemoveAt(1917);
+
+                        ProcessBytes(transmissionBuffer.ToArray());
+                        transmissionBuffer.Clear();
+
+                        // Signal that all bytes have been received.
+                        receiveDone.Set();
+
+                        Receive(client);
+                    }
+
+
+                    /*
                     // There might be more data, so store the data received so far.
                     state.sb.Append(Encoding.ASCII.GetString(state.buffer, 0, bytesRead));
 
@@ -143,15 +178,27 @@ namespace KinectViaTcp
                     //  Get the rest of the data.
                     client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                         new AsyncCallback(ReceiveCallback), state);
+                     * 
+                     * */
+
                 }
                 else
                 {
                     // All the data has arrived; put it in response.
-                    if (state.sb.Length > 1)
+                   /* if (state.sb.Length > 1)
                     {
                         //string receivedData = state.sb.ToString();
                         //ProcessReceivedData(receivedData);
                     }
+                    */
+
+                    // Remove header 
+                 //   transmissionBuffer.RemoveRange(0, 27);
+                    
+                    // Process!!!
+                    ProcessBytes(transmissionBuffer.ToArray());
+                    transmissionBuffer.Clear();
+
                     // Signal that all bytes have been received.
                     receiveDone.Set();
 
@@ -166,7 +213,29 @@ namespace KinectViaTcp
             }
         }
 
+        void ProcessBytes(byte[] receivedBytes)
+        {
+            Console.WriteLine("Received {0} bytes from server.", receivedBytes.Length);
+            if (receivedBytes.Length == 309144)
+            {
+                var skeleton = ByteArrayToObject(receivedBytes) as SkeletonData;
+                //          Console.WriteLine("User: {0}, State: {1}, HipCenter X: {2}", skeleton.UserIndex, skeleton.State.ToString(), skeleton.GetJoint(KinectJointID.HipCenter).Position.X);
 
+                OnUpdatedSkeletonData(skeleton);
+            }
+        }
+
+        private static Object ByteArrayToObject(byte[] arrBytes)
+        {
+            MemoryStream memStream = new MemoryStream();
+            BinaryFormatter binForm = new BinaryFormatter();
+            memStream.Write(arrBytes, 0, arrBytes.Length);
+            memStream.Seek(0, SeekOrigin.Begin);
+            Object obj = (Object)binForm.Deserialize(memStream);
+            return obj;
+        }
+
+        /*
         void ProcessStatement(string message)
         {
             // Add new user
@@ -232,7 +301,7 @@ namespace KinectViaTcp
                 }
             }
             return null;
-        }
+        }*/
 
         // Invoke the NewDataEvent; called whenever list changes
         protected virtual void OnUpdatedSkeletonData(SkeletonData e)
@@ -242,18 +311,18 @@ namespace KinectViaTcp
         }
 
         // Invoke the NewDataEvent; called whenever list changes
-    /*    protected virtual void OnNewUser(SkeletonData e)
-        {
-            if (NewUserEvent != null)
-                NewUserEvent(this, e);
-        }
+        /*    protected virtual void OnNewUser(SkeletonData e)
+            {
+                if (NewUserEvent != null)
+                    NewUserEvent(this, e);
+            }
 
-        // Invoke the NewDataEvent; called whenever list changes
-        protected virtual void OnUserLost(SkeletonData e)
-        {
-            if (UserLostEvent != null)
-                UserLostEvent(this, e);
-        }
-     */
+            // Invoke the NewDataEvent; called whenever list changes
+            protected virtual void OnUserLost(SkeletonData e)
+            {
+                if (UserLostEvent != null)
+                    UserLostEvent(this, e);
+            }
+         */
     }
 }

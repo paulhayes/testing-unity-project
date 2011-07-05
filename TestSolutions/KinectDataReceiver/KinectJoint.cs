@@ -5,11 +5,11 @@ using System.Text;
 
 namespace KinectViaTcp
 {
+    [Serializable]
     public class KinectJoint
     {
         public KinectJointID ID { get; set; }
         public Vector Position; 
-        //public JointTrackingState TrackingState { get; set; }
 
         public KinectJoint(KinectJointID jointID, Vector position)
         {

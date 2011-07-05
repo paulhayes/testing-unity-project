@@ -5,6 +5,7 @@ using System.Text;
 
 namespace KinectViaTcp
 {
+    [Serializable]
     public struct Vector
     {
         public float X { get; set; }

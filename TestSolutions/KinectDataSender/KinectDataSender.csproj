@@ -50,6 +50,12 @@
     <Compile Include="KinectDataSender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\KinectDataReceiver\KinectDataReceiver.csproj">
+      <Project>{C8BAFB81-46E3-41A6-9B5E-D6D0AB78C00F}</Project>
+      <Name>KinectDataReceiver</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(TargetPath)" "$(SolutionDir)Bin"</PostBuildEvent>
