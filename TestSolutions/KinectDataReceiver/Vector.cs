@@ -5,6 +5,10 @@ using System.Text;
 
 namespace KinectViaTcp
 {
+    /// <summary>
+    /// Vector contains x,y,z position information.
+    /// w is the confidence - 0-1
+    /// </summary>
     [Serializable]
     public struct Vector
     {

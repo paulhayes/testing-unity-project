@@ -5,6 +5,9 @@ using System.Text;
 
 namespace KinectViaTcp
 {
+    /// <summary>
+    /// Possible joints within a Kinect Skeleton
+    /// </summary>
     [Serializable]
     public enum KinectJointID
     {

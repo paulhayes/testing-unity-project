@@ -5,6 +5,9 @@ using System.Text;
 
 namespace KinectViaTcp
 {
+    /// <summary>
+    /// A joint in the skeleton detected by Kinect
+    /// </summary>
     [Serializable]
     public class KinectJoint
     {

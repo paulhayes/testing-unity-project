@@ -5,6 +5,10 @@ using System.Text;
 
 namespace KinectViaTcp
 {
+    /// <summary>
+    /// Container class for Kinect SkeletonData
+    /// Similar to the KinectSDK NUI Skeleton class
+    /// </summary>
     [Serializable]
     public class SkeletonData
     {
@@ -12,8 +16,12 @@ namespace KinectViaTcp
         public List<KinectJoint> Joints;
         public Vector Position;
         public int UserIndex;
-        public byte[] UserImage = new byte[320 * 240 * 4];
+        //public byte[] UserImage = new byte[320 * 240 * 4]; // A 32bit Depth Image containing users, change to run-length encoded bitmap?
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="userId"></param>
         public SkeletonData(int userId)
         {
             UserIndex = userId;
@@ -42,11 +50,16 @@ namespace KinectViaTcp
             Joints.Add(new KinectJoint(KinectJointID.FootRight, new Vector(0, 0, 0)));
         }
 
-        public KinectJoint GetJoint(KinectJointID jointToUpdate)
+        /// <summary>
+        /// Get joint by ID
+        /// </summary>
+        /// <param name="jointToUpdate"></param>
+        /// <returns></returns>
+        public KinectJoint GetJoint(KinectJointID jointID)
         {
             foreach(KinectJoint joint in Joints)
             {
-                if (joint.ID == jointToUpdate)
+                if (joint.ID == jointID)
                 {
                     return joint;
                 }
@@ -54,6 +67,11 @@ namespace KinectViaTcp
             return null;
         }
 
+        /// <summary>
+        /// Constructor that builds SkeletonData from an existing skeleton
+        /// Deep copy.
+        /// </summary>
+        /// <param name="copy"></param>
         public SkeletonData(SkeletonData copy)
         {
             UserIndex = copy.UserIndex;

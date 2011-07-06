@@ -22,26 +22,25 @@ namespace KinectViaTcp
         const int BLUE_IDX = 0;
         static byte[] depthFrame32 = new byte[320 * 240 * 4];
 
-
-
-
+        // Listen for incoming connection on...
         static int PORT = 12345;
 
-        //static int totalFrames = 0;
-        //static int lastFrames = 0;
-        //static DateTime lastTime = DateTime.MaxValue;
         static System.Timers.Timer timer;
 
         static Socket socket;
         static Runtime nui;
-        //static bool connected = false;
-        static int buffersize = 1024;
-        static byte[] buffer = new byte[buffersize];
+
+        //    static int buffersize = 1024;
+        //    static byte[] buffer = new byte[buffersize];
 
         static List<int> trackedSkeletons = new List<int>();
 
         static ManualResetEvent sendDone = new ManualResetEvent(false);
 
+        /// <summary>
+        /// Start Kinect and wait for a client connection
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             StartNui();
@@ -52,7 +51,11 @@ namespace KinectViaTcp
             Console.ReadLine();
         }
 
-        // Accept one client connection asynchronously.
+        #region TCP Connection Methods
+
+        /// <summary>
+        /// Accept one client connection asynchronously
+        /// </summary>
         public static void WaitForConnectionAsync()
         {
             // Start to listen for connections from a client.
@@ -60,11 +63,10 @@ namespace KinectViaTcp
 
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            //socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
             IPEndPoint iep = new IPEndPoint(IPAddress.Any, PORT);
             socket.Bind(iep);
             socket.Listen(5);
-            socket.BeginAccept(new AsyncCallback(DoAcceptTcpClientCallback), socket);
+            socket.BeginAccept(new AsyncCallback(AcceptTcpClientCallback), socket);
 
             timer = new System.Timers.Timer(2000);
             timer.Enabled = true;
@@ -74,8 +76,11 @@ namespace KinectViaTcp
             Console.WriteLine("Enabled timer.");
         }
 
-        // Process the client connection.
-        public static void DoAcceptTcpClientCallback(IAsyncResult ar)
+        /// <summary>
+        /// Process the client connection
+        /// </summary>
+        /// <param name="ar"></param>
+        public static void AcceptTcpClientCallback(IAsyncResult ar)
         {
             Console.WriteLine("Client connected.");
 
@@ -83,29 +88,109 @@ namespace KinectViaTcp
             // the console.
             socket = socket.EndAccept(ar);
 
-            startReceiving();
-
-            // Process the connection here. (Add the client to a
-            // server table, read data, etc.)
-
+            //startReceiving();
+            Receive(socket);
         }
-
-        public static void startReceiving()
+      
+        /// <summary>
+        /// Receive data from a socket
+        /// </summary>
+        /// <param name="client">Socket to receive from</param>
+        private static void Receive(Socket client)
         {
-            Console.WriteLine("Running StartReceiving method.");
-            int offset = 0;
-            socket.BeginReceive(buffer, offset, buffersize, SocketFlags.None, new AsyncCallback(DoReceiveTcpClientCallback), socket);
-            Console.WriteLine("Finished running StartReceiving method.");
+            try
+            {
+                // Create the state object.
+                StateObject state = new StateObject();
+                state.workSocket = client;
+
+                // Begin receiving the data from the remote device.
+                client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                    new AsyncCallback(ReceiveCallback), state);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
-        public static void DoReceiveTcpClientCallback(IAsyncResult ar)
+        /// <summary>
+        /// Callback upon receipt of data from the socket
+        /// </summary>
+        /// <param name="ar"></param>
+        private static void ReceiveCallback(IAsyncResult ar)
         {
-            Console.WriteLine("Received message.");
-            int read = socket.EndReceive(ar);
+            try
+            {
+                // Retrieve the state object and the client socket 
+                // from the asynchronous state object.
+                StateObject state = (StateObject)ar.AsyncState;
+                Socket client = state.workSocket;
 
-            startReceiving();
+                // Read data from the remote device.
+                int bytesRead = client.EndReceive(ar);
+
+
+                // Begin receiving again
+                Receive(client);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
+        /// <summary>
+        /// Send a byte array through a socket
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="byteData"></param>
+        private static void SendBytes(Socket client, byte[] byteData)
+        {
+            try
+            {
+                if (socket.Connected)
+                {
+                    // Begin sending the data to the remote device.
+                    client.BeginSend(byteData, 0, byteData.Length, SocketFlags.None,
+                        new AsyncCallback(SendCallback), client);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Disconnected.  Error: " + ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Callback after sending of data
+        /// </summary>
+        /// <param name="ar"></param>
+        private static void SendCallback(IAsyncResult ar)
+        {
+            try
+            {
+                // Retrieve the socket from the state object.
+                Socket client = (Socket)ar.AsyncState;
+
+                // Complete sending the data to the remote device.
+                int bytesSent = client.EndSend(ar);
+                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
+
+                // Signal that all bytes have been sent.
+                sendDone.Set();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Heartbeat timer for socket connection
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         public static void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             if (socket.Connected)
@@ -120,6 +205,16 @@ namespace KinectViaTcp
             }
         }
 
+
+
+
+        #endregion
+
+        #region Kinect related Methods
+
+        /// <summary>
+        /// Initialises the Kinect Sensor
+        /// </summary>
         static public void StartNui()
         {
             nui = new Runtime();
@@ -134,7 +229,6 @@ namespace KinectViaTcp
                 return;
             }
 
-
             try
             {
                 nui.DepthStream.Open(ImageStreamType.Depth, 2, ImageResolution.Resolution320x240, ImageType.DepthAndPlayerIndex);
@@ -145,22 +239,18 @@ namespace KinectViaTcp
                 return;
             }
 
-            //lastTime = DateTime.Now;
-
+            // Connect event handlers
             nui.DepthFrameReady += new EventHandler<ImageFrameReadyEventArgs>(nui_DepthFrameReady);
             nui.SkeletonFrameReady += new EventHandler<SkeletonFrameReadyEventArgs>(nui_SkeletonFrameReady);
         }
-        /*
-        static string getLineFromJoint(Joint joint)
-        {
-            float X = joint.Position.X;
-            float Y = joint.Position.Y;
-            float Z = joint.Position.Z;
 
-            return "|" + joint.ID + " " + X + " " + Y + " " + Z;
-        }
-         */
+        #region Event Handlers for new Kinect frames
 
+        /// <summary>
+        /// EventHandler for a new skeleton frame
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void nui_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             SkeletonFrame skeletonFrame = e.SkeletonFrame;
@@ -168,7 +258,6 @@ namespace KinectViaTcp
             foreach (Microsoft.Research.Kinect.Nui.SkeletonData data in skeletonFrame.Skeletons)
             {
                 //Console.WriteLine("User: " + data.UserIndex + " is: " + data.TrackingState);
-
 
                 if (SkeletonTrackingState.Tracked == data.TrackingState)
                 {
@@ -187,7 +276,6 @@ namespace KinectViaTcp
                             trackedSkeletons.Remove(iSkeleton);
                             skeletonToSend.State = SkeletonState.Removed;
                             sendPacket = true;
-                            //Send(socket, "#RemoveUser|" + iSkeleton);
                         }
                         else
                         {
@@ -203,14 +291,11 @@ namespace KinectViaTcp
                         skeletonToSend.Position = new Vector(data.Position.X, data.Position.Y, data.Position.Z);
                         skeletonToSend.State = SkeletonState.New;
                         sendPacket = true;
-                        //Send(socket, "#AddUser|" + iSkeleton);
                     }
                     else
                     {
-                        //string jointText = "#User|" + iSkeleton;
                         foreach (Joint joint in data.Joints)
                         {
-                            //jointText += getLineFromJoint(joint);
                             KinectJointID jointType = (KinectJointID)Enum.Parse(typeof(KinectJointID), joint.ID.ToString(), true);
                             Vector position = new Vector(joint.Position.X, joint.Position.Y, joint.Position.Z);
                             skeletonToSend.GetJoint(jointType).Position = position;
@@ -219,16 +304,15 @@ namespace KinectViaTcp
                         skeletonToSend.State = SkeletonState.Updated;
                         sendPacket = true;
 
-                        //Send(socket, jointText);
                     }
 
                     if (sendPacket)
                     {
                         // Serialise skeleton and send it through the socket
                         //TEST SERIALISTATION
-                       // byte[] skeletonBytes = ObjectToByteArray(skeletonToSend);
+                        // byte[] skeletonBytes = ObjectToByteArray(skeletonToSend);
                         //var testSkeleton = ByteArrayToObject(testArray) as SkeletonData;
-                     //   Console.WriteLine("Skeleton size: {0}", skeletonBytes.Length);
+                        //   Console.WriteLine("Skeleton size: {0}", skeletonBytes.Length);
 
                         SendBytes(socket, ObjectToByteArray(skeletonToSend));
                         KinectJoint tempJoint = skeletonToSend.GetJoint(KinectJointID.HipCenter);
@@ -267,62 +351,38 @@ namespace KinectViaTcp
 
         }
 
-        private static void SendBytes(Socket client, byte[] byteData)
-        {
-            try
-            {
-                if (socket.Connected)
-                {
-                    // Begin sending the data to the remote device.
-                    client.BeginSend(byteData, 0, byteData.Length, SocketFlags.None,
-                        new AsyncCallback(SendCallback), client);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Disconnected.  Error: " + ex.ToString());
-            }
-        }
-
-        private static void SendCallback(IAsyncResult ar)
-        {
-            try
-            {
-                // Retrieve the socket from the state object.
-                Socket client = (Socket)ar.AsyncState;
-
-                // Complete sending the data to the remote device.
-                int bytesSent = client.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
-
-                // Signal that all bytes have been sent.
-                sendDone.Set();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-        }
-
+        /// <summary>
+        /// EventHandler for a new depth frame
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         static void nui_DepthFrameReady(object sender, ImageFrameReadyEventArgs e)
         {
             PlanarImage Image = e.ImageFrame.Image;
 
             var imageSkeleton = GeneratePlayerOnly(Image.Bits);
-            if(imageSkeleton != null)
+            if (imageSkeleton != null)
             {
 
-            //Console.WriteLine("Image bytes. {0}", convertedDepthFrame.Length);
+                //Console.WriteLine("Image bytes. {0}", convertedDepthFrame.Length);
                 byte[] skeletonBytes = ObjectToByteArray(imageSkeleton);
                 //var testSkeleton = ByteArrayToObject(testArray) as SkeletonData;
-               // Console.WriteLine("Skeleton size: {0}", skeletonBytes.Length);
-                SendBytes(socket, skeletonBytes);
+                // Console.WriteLine("Skeleton size: {0}", skeletonBytes.Length);
+                
+                // Dont send through the image. Currently doesnt work
+                //SendBytes(socket, skeletonBytes);
 
             }
         }
+        #endregion
+
+        #endregion
+
+        #region User/Player image encoding
 
         // Converts a 16-bit grayscale depth frame which includes player indexes into a 32-bit frame
-        // that displays different players in different colors
+        // that displays different players in different colors, based on Kinect Skeleton Viewer
+        // Can be improved by using an RLE bitmap?
         private static SkeletonData GeneratePlayerOnly(byte[] depthFrame16)
         {
             byte[] userFrame32 = new byte[320 * 240 * 4];
@@ -356,15 +416,21 @@ namespace KinectViaTcp
             {
                 var imageSkeleton = new SkeletonData(1);
                 imageSkeleton.State = SkeletonState.ImageOnly;
-                imageSkeleton.UserImage = depthFrame32;
+                //imageSkeleton.UserImage = depthFrame32; // Commented out in SkeletonData to reduce byte[] size
                 return imageSkeleton;
             }
             return null;
         }
 
-        // Serialise SkeletonData
+        #endregion
 
-        // Convert an object to a byte array
+        #region Serialise SkeletonData
+
+        /// <summary>
+        /// Convert an object to a byte array
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         private static byte[] ObjectToByteArray(Object obj)
         {
             if (obj == null)
@@ -375,7 +441,12 @@ namespace KinectViaTcp
             return ms.ToArray();
         }
 
-        // Convert a byte array to an Object
+
+        /// <summary>
+        /// Convert a byte array to an Object
+        /// </summary>
+        /// <param name="arrBytes"></param>
+        /// <returns></returns>
         private static Object ByteArrayToObject(byte[] arrBytes)
         {
             MemoryStream memStream = new MemoryStream();
@@ -386,7 +457,7 @@ namespace KinectViaTcp
             return obj;
         }
 
-
+        #endregion
     }
 
 }

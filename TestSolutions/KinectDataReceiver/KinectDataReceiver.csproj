@@ -43,11 +43,10 @@
     <Compile Include="KinectDataReceiver.cs" />
     <Compile Include="KinectJoint.cs" />
     <Compile Include="KinectJointID.cs" />
-    <Compile Include="KinectJointsCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkeletonData.cs" />
-    <Compile Include="SkeletonQuality.cs" />
     <Compile Include="SkeletonState.cs" />
+    <Compile Include="StateObject.cs" />
     <Compile Include="Vector.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
