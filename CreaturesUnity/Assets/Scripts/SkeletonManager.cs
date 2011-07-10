@@ -92,9 +92,16 @@ public class SkeletonManager : MonoBehaviour {
             for (int i = 0; i < skeleton.Joints.Count; i++)
             {
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-               // cube.transform.position = new Vector3(kinectOffset, 0.0f, 0.0f);
-                cube.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-                cubeSkeleton[i] = cube;
+               	
+				cube.transform.position = new Vector3(kinectOffset, 0.0f, 0.0f);
+                
+				cube.transform.localScale *= 0.1f;
+                
+				cube.transform.parent = gameObject.transform;
+				
+				cubeSkeleton[i] = cube;
+				
+				
             }
             if (!users.ContainsKey(skeleton.UserIndex))
             {
