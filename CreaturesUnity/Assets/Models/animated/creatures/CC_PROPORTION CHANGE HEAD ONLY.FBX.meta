@@ -21,6 +21,12 @@ ModelImporter:
     animationCompression: 1
     animationWrapMode: 0
     splitAnimations: 1
+    clips:
+      ProportionChangeHead:
+        firstFrame: 0
+        lastFrame: 1
+        loop: 0
+        wrapMode: 1
   nodeInfo:
     Bip001 R Finger0Nub:
     - 100000
@@ -272,3 +278,5 @@ AssetImporter:
   fileIDToRecycleName:
     4300000: default
     7400000: Take 001 //// CC_PROPORTION CHANGE HEAD ONLY
+    7400002: ' //// CC_PROPORTION CHANGE HEAD ONLY'
+    7400004: ProportionChangeHead //// CC_PROPORTION CHANGE HEAD ONLY

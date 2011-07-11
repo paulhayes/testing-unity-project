@@ -109,7 +109,13 @@ public class Animation_Pool
 				
 				Debug.Log("Playing " + currentPlaying + " on " + state.ToString());
 				
-				target.animation.Play(currentPlaying);
+				//target.animation[currentPlaying].layer = a.layer;
+				
+				
+				target.animation.CrossFade(currentPlaying);
+
+				
+				
 				
 				audioController.PlayAudio(a.audioName);
 				

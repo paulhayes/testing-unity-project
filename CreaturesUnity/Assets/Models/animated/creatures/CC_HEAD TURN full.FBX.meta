@@ -21,6 +21,12 @@ ModelImporter:
     animationCompression: 1
     animationWrapMode: 0
     splitAnimations: 1
+    clips:
+      LookAround:
+        firstFrame: 0
+        lastFrame: 70
+        loop: 0
+        wrapMode: 1
   nodeInfo:
     Bip001 R Finger0Nub:
     - 100000
@@ -272,3 +278,4 @@ AssetImporter:
   fileIDToRecycleName:
     4300000: default
     7400000: Take 001 //// CC_HEAD TURN full
+    7400002: LookAround //// CC_HEAD TURN full

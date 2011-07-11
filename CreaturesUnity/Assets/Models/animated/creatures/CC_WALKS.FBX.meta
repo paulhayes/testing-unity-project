@@ -39,7 +39,7 @@ ModelImporter:
         wrapMode: 2
       WalkLoopToStandIdle:
         firstFrame: 86
-        lastFrame: 118
+        lastFrame: 116
         loop: 1
         wrapMode: 2
   nodeInfo:

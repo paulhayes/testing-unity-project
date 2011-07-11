@@ -99,6 +99,15 @@ public class BuildAnimationClipsOnImport : AssetPostprocessor
 				a.end = int.Parse(vals[6]);
 				a.loop = bool.Parse(vals[7]);
 				a.labels = vals[10].Split(' ');
+				a.layer = int.Parse(vals[11]);
+				
+				if(vals.Length >= 13)
+				{
+					if(vals[12].Length > 0)
+					{
+						a.mixingbone = vals[12];	
+					}				
+				}
 				
 				// turn this on if looped animations are out one frame
 				if(a.loop) a.end--;

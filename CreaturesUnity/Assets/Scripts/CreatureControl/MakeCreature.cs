@@ -96,6 +96,7 @@ public class MakeCreature : MonoBehaviour {
 		// And add all clips to the the target model
 		foreach (AnimationClip state in clips) 
 		{	
+			
 			targetAnim.AddClip(state, state.name);	
 		}
 		
@@ -134,8 +135,18 @@ public class MakeCreature : MonoBehaviour {
 				a.labels = vals[10].ToUpper().Split(' ');
 				a.audioName = vals[8];
 				
+				a.layer = int.Parse(vals[11]);
+				
+				if(vals.Length >= 13)
+				{
+					if(vals[12].Length > 0)
+					{
+						a.mixingbone = vals[12];	
+					}				
+				}
+				
 				// turn this on if looped animations are out one frame
-				if(a.loop) a.end--;
+				//if(a.loop) a.end--;
 				
 		        anims.Add(a);
 				

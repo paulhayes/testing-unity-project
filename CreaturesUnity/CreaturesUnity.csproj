@@ -169,6 +169,9 @@
      <None Include="Assets\Standard Assets\Scripts\General Scripts\DragRigidbody.js" />
      <Compile Include="Assets\Standard Assets\Scripts\Utility Scripts\CombineChildren.cs" />
      <Compile Include="Assets\Standard Assets\Scripts\Utility Scripts\MeshCombineUtility.cs" />
+ <Reference Include="Assets\Plugins\KinectDataReceiver">
+ <HintPath>Assets\Plugins\KinectDataReceiver.dll</HintPath>
+ </Reference>
  <Reference Include="Assets\Scripts\Behave\Compatibility\Behave">
  <HintPath>Assets\Scripts\Behave\Compatibility\Behave.dll</HintPath>
  </Reference>
@@ -180,9 +183,6 @@
  </Reference>
  <Reference Include="Assets\Scripts\Behave\Behave.Unity.Runtime">
  <HintPath>Assets\Scripts\Behave\Behave.Unity.Runtime.dll</HintPath>
- </Reference>
- <Reference Include="Assets\Scripts\Plugins\KinectDataReceiver">
- <HintPath>Assets\Scripts\Plugins\KinectDataReceiver.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

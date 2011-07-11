@@ -1,40 +1,40 @@
-Name,Range(string),FBX,CleanName,CleanFBX,Start,End,Loop,AudioFile,AudioFramePlay,Tags
-Standing_Breathe,0 – 34,CC Standing,StandingBreathe,CC_Standing,0,34,TRUE,sitting breathe,0,Standing Idle
-Standing_Scratch,35 – 84,CC Standing,StandingScratch,CC_Standing,35,84,TRUE,standing stratch,35,Standing Idle
-Standing_forage,85 – 229,CC Standing,StandingForage,CC_Standing,85,229,TRUE,standing forage,85,Standing Idle
-Standing_Snap at bug,230 – 269,CC Standing,StandingSnapAtBug,CC_Standing,230,269,TRUE,,230,Standing Idle
-Standing_Shift weight,270 – 304,CC Standing,StandingShiftWeight,CC_Standing,270,304,TRUE,standing shift weight,270,Standing Idle
-Standing_open mouth,305 – 339,CC Standing,StandingOpenMouth,CC_Standing,305,339,TRUE,standing open mouth,305,Standing Idle
-Standing_look around,340 – 419,CC Standing,StandingLookAround,CC_Standing,340,419,TRUE,standing look around,340,Standing Idle
-Standing_communicate01,420 – 484,CC Standing,StandingCommunicate01,CC_Standing,420,484,TRUE,standing communicate01,420,Standing Communication
-Standing_communicate02,485 – 584,CC Standing,StandingCommunicate02,CC_Standing,485,584,TRUE,standing communicate02,485,Standing Communication
-Standing to look left,585 – 609,CC Standing,StandingToLookLeft,CC_Standing,585,609,FALSE,standing to look left,585,Transition Standing LookLeft
-Standing to look Right,750 – 774,CC Standing,StandingToLookRight,CC_Standing,750,774,FALSE,standing to look right,750,Transition Standing LookRight
-Standing to Walk loop,0 – 16,CC Walks,StandingToWalkLoop,CC_Walks,0,16,TRUE,standing to walk loop,0,Transition Standing Walk
-Standing to Sit,0 – 49,CC Sitting,StandingToSit,CC_Sitting,0,49,FALSE,standing to sit,0,Transition Standing Sitting
-Standing to Run,0 – 9,CC Runs,StandingToRun,CC_Runs,0,9,FALSE,standing to run,0,Transition Standing Run
-Look Left_Breathe,610 – 644,CC Standing,LookLeftBreathe,CC_Standing,610,644,TRUE,look left to breathe,610,LookLeft Idle
-Look Left_look around,645 – 689,CC Standing,LookLeftLookAround,CC_Standing,645,689,TRUE,look left look around,645,LookLeft Idle
-Look Left_Mouth Open,690 – 724,CC Standing,LookLeftMouthOpen,CC_Standing,690,724,TRUE,look left mouth open,690,LookLeft Idle
-Look left to Standing,725 – 749,CC Standing,LookLeftToStanding,CC_Standing,725,749,FALSE,look left to standing,725,Transition LookLeft Standing
-Look Right_Breathe,775 – 824,CC Standing,LookRightBreathe,CC_Standing,775,824,TRUE,look right breathe,775,LookRight Idle
-Look Right_Look around,825 – 874 ,CC Standing,LookRightLookAround,CC_Standing,825,874,TRUE,look right look around,825,LookRight Idle
-Look Right_Mouth Open,875 – 899,CC Standing,LookRightMouthOpen,CC_Standing,875,899,TRUE,look right mouth open,875,LookRight Idle
-Look Right to Standing,900 – 924,CC Standing,LookRightToStanding,CC_Standing,900,924,FALSE,look right to standing,900,Transition LookRight Standing
-Walk Loop,17 – 51,CC Walks,WalkLoop,CC_Walks,17,51,TRUE,walk loop final,17,Walk Idle
-Walk loop_look around,52 – 85,CC Walks,WalkLoopLookAround,CC_Walks,52,85,TRUE,walk loop look around,52,Walk Idle
-Walk loop to Stand idle,86 – 119,CC Walks,WalkLoopToStandIdle,CC_Walks,86,119,TRUE,walk loop to stand idle,86,Transition Walk Standing
-Run loop,10 – 29,CC Runs,RunLoop,CC_Runs,10,29,TRUE,run loop,10,Run Idle
-Run loop to Standing,30 – 66,CC Runs,RunLoopToStanding,CC_Runs,30,66,FALSE,run loop to standing,30,Transition Run Standing
-Sitting_breathe,50 – 99,CC_Sitting,SittingBreathe,CC_Sitting,50,99,TRUE,sitting breathe,50,Sitting Idle
-Sitting_open mouth,100 – 119,CC_Sitting,SittingOpenMouth,CC_Sitting,100,119,TRUE,sitting open mouth,100,Sitting Idle
-Sitting_look small,120 – 169,CC_Sitting,SittingLookSmall,CC_Sitting,120,169,TRUE,sitting look small,120,Sitting Idle
-Sitting_look large 01,170 – 249,CC_Sitting,SittingLookLarge01,CC_Sitting,170,249,TRUE,,170,Sitting Idle
-Sitting_Prune,250 – 349,CC_Sitting,SittingPrune,CC_Sitting,250,349,TRUE,sitting prune,250,Sitting Idle
-Sitting_Call,350 – 399,CC_Sitting,SittingCall,CC_Sitting,350,399,TRUE,sitting call,350,Sitting Communication
-Sitting to Standing,400 – 459,CC_Sitting,SittingToStanding,CC_Sitting,400,459,FALSE,sitting to standing,400,Transition Sitting Standing
-
-
+Name,Range(string),FBX,CleanName,CleanFBX,Start,End,Loop,AudioFile,AudioFramePlay,Tags,Layer,MixingBone
+Standing_Breathe,0 – 34,CC Standing,StandingBreathe,CC_Standing,0,34,TRUE,sitting breathe,0,Standing Idle,1
+Standing_Scratch,35 – 84,CC Standing,StandingScratch,CC_Standing,35,84,TRUE,standing stratch,35,Standing Idle,1
+Standing_forage,85 – 229,CC Standing,StandingForage,CC_Standing,85,229,TRUE,standing forage,85,Standing Idle,1
+Standing_Snap at bug,230 – 269,CC Standing,StandingSnapAtBug,CC_Standing,230,269,TRUE,,230,Standing Idle,1
+Standing_Shift weight,270 – 304,CC Standing,StandingShiftWeight,CC_Standing,270,304,TRUE,standing shift weight,270,Standing Idle,1
+Standing_open mouth,305 – 339,CC Standing,StandingOpenMouth,CC_Standing,305,339,TRUE,standing open mouth,305,Standing Idle,1
+Standing_look around,340 – 419,CC Standing,StandingLookAround,CC_Standing,340,419,TRUE,standing look around,340,Standing Idle,1
+Standing_communicate01,420 – 484,CC Standing,StandingCommunicate01,CC_Standing,420,484,TRUE,standing communicate01,420,Standing Communication,2
+Standing_communicate02,485 – 584,CC Standing,StandingCommunicate02,CC_Standing,485,584,TRUE,standing communicate02,485,Standing Communication,2
+Standing to look left,585 – 609,CC Standing,StandingToLookLeft,CC_Standing,585,609,FALSE,standing to look left,585,Transition Standing LookLeft,2
+Standing to look Right,750 – 774,CC Standing,StandingToLookRight,CC_Standing,750,774,FALSE,standing to look right,750,Transition Standing LookRight,2
+Standing to Walk loop,0 – 16,CC Walks,StandingToWalkLoop,CC_Walks,0,16,TRUE,standing to walk loop,0,Transition Standing Walk,2
+Standing to Sit,0 – 49,CC Sitting,StandingToSit,CC_Sitting,0,49,FALSE,standing to sit,0,Transition Standing Sitting,2
+Standing to Run,0 – 9,CC Runs,StandingToRun,CC_Runs,0,9,FALSE,standing to run,0,Transition Standing Run,2
+Look Left_Breathe,610 – 644,CC Standing,LookLeftBreathe,CC_Standing,610,644,TRUE,look left to breathe,610,LookLeft Idle,1
+Look Left_look around,645 – 689,CC Standing,LookLeftLookAround,CC_Standing,645,689,TRUE,look left look around,645,LookLeft Idle,1
+Look Left_Mouth Open,690 – 724,CC Standing,LookLeftMouthOpen,CC_Standing,690,724,TRUE,look left mouth open,690,LookLeft Idle,1
+Look left to Standing,725 – 749,CC Standing,LookLeftToStanding,CC_Standing,725,749,FALSE,look left to standing,725,Transition LookLeft Standing,2
+Look Right_Breathe,775 – 824,CC Standing,LookRightBreathe,CC_Standing,775,824,TRUE,look right breathe,775,LookRight Idle,1
+Look Right_Look around,825 – 874 ,CC Standing,LookRightLookAround,CC_Standing,825,874,TRUE,look right look around,825,LookRight Idle,1
+Look Right_Mouth Open,875 – 899,CC Standing,LookRightMouthOpen,CC_Standing,875,899,TRUE,look right mouth open,875,LookRight Idle,1
+Look Right to Standing,900 – 924,CC Standing,LookRightToStanding,CC_Standing,900,924,FALSE,look right to standing,900,Transition LookRight Standing,2
+Walk Loop,17 – 51,CC Walks,WalkLoop,CC_Walks,17,51,TRUE,walk loop final,17,Walk Idle,2
+Walk loop_look around,52 – 85,CC Walks,WalkLoopLookAround,CC_Walks,52,85,TRUE,walk loop look around,52,Walk Idle,2
+Walk loop to Stand idle,86 – 117,CC Walks,WalkLoopToStandIdle,CC_Walks,86,117,TRUE,walk loop to stand idle,86,Transition Walk Standing,2
+Run loop,10 – 29,CC Runs,RunLoop,CC_Runs,10,29,TRUE,run loop,10,Run Idle,3
+Run loop to Standing,30 – 66,CC Runs,RunLoopToStanding,CC_Runs,30,66,FALSE,run loop to standing,30,Transition Run Standing,2
+Sitting_breathe,50 – 99,CC_Sitting,SittingBreathe,CC_Sitting,50,99,TRUE,sitting breathe,50,Sitting Idle,1
+Sitting_open mouth,100 – 119,CC_Sitting,SittingOpenMouth,CC_Sitting,100,119,TRUE,sitting open mouth,100,Sitting Idle,1
+Sitting_look small,120 – 169,CC_Sitting,SittingLookSmall,CC_Sitting,120,169,TRUE,sitting look small,120,Sitting Idle,1
+Sitting_look large 01,170 – 249,CC_Sitting,SittingLookLarge01,CC_Sitting,170,249,TRUE,,170,Sitting Idle,1
+Sitting_Prune,250 – 349,CC_Sitting,SittingPrune,CC_Sitting,250,349,TRUE,sitting prune,250,Sitting Idle,1
+Sitting_Call,350 – 399,CC_Sitting,SittingCall,CC_Sitting,350,399,TRUE,sitting call,350,Sitting Communication,1
+Sitting to Standing,400 – 459,CC_Sitting,SittingToStanding,CC_Sitting,400,459,FALSE,sitting to standing,400,Transition Sitting Standing,1
+Look Around,0 – 70,CC_HEAD TURN full,LookAround,CC_HEAD_TURN_full,0,70,FALSE,,,Procedural look,4,Bip001 Head
+Proportion change Head,0 – 1,CC_PROPORTION CHANGE HEAD ONLY,ProportionChangeHead,CC_PROPORTION_CHANGE_HEAD_ONLY,0,1,FALSE,,,Procedural scale,4
 
 
 Walk loop to Run,,,USE BLENDED ANIMATION between Walk loop and Run ,,,,,look right mouth open_alt01
