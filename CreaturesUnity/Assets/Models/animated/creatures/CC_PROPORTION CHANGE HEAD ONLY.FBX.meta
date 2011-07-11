@@ -1,0 +1,274 @@
+fileFormatVersion: 1
+guid: cfe5f1ac170904bb7a52e75a56410bfb
+ModelImporter:
+  importerVersion: 7
+  meshes:
+    scaleFactor: 0.1
+    useFileUnits: 1
+    meshCompression: 0
+    generateColliders: 0
+    swapUVs: 1
+  tangentSpace:
+    normalImportMode: 0
+    tangentImportMode: 1
+    smoothingAngle: 60
+    splitTangents: 1
+  materials:
+    generation: 2
+  animations:
+    generation: 3
+    bakeAnimations: 0
+    animationCompression: 1
+    animationWrapMode: 0
+    splitAnimations: 1
+  nodeInfo:
+    Bip001 R Finger0Nub:
+    - 100000
+    - 400000
+    Bip001 R Hand:
+    - 100002
+    - 400002
+    //RootNode:
+    - 100004
+    - 400004
+    - 11100000
+    Bip001 R UpperArm:
+    - 100006
+    - 400006
+    Bip001 R Finger0:
+    - 100008
+    - 400008
+    Bip001 L Finger0Nub:
+    - 100010
+    - 400010
+    Bip001 R Forearm:
+    - 100012
+    - 400012
+    Bip001 L Hand:
+    - 100014
+    - 400014
+    Bip001 R Clavicle:
+    - 100016
+    - 400016
+    Bip001 L UpperArm:
+    - 100018
+    - 400018
+    Bip001 L Finger0:
+    - 100020
+    - 400020
+    Bip001_nose001:
+    - 100022
+    - 400022
+    Bip001 L Forearm:
+    - 100024
+    - 400024
+    Bip001_left head feathers:
+    - 100026
+    - 400026
+    Bip001 L Clavicle:
+    - 100028
+    - 400028
+    Bip001_tongue4:
+    - 100030
+    - 400030
+    Bip001_right head feathers:
+    - 100032
+    - 400032
+    Bip001_tongue2:
+    - 100034
+    - 400034
+    Bip001_tongue5:
+    - 100036
+    - 400036
+    Bip001_nutsack low:
+    - 100038
+    - 400038
+    Bip001_tongue3:
+    - 100040
+    - 400040
+    Bip001_lower jaw:
+    - 100042
+    - 400042
+    Bip001_tongue1:
+    - 100044
+    - 400044
+    Bip001 Ponytail23:
+    - 100046
+    - 400046
+    Bip001_nutsack high:
+    - 100048
+    - 400048
+    Bip001 Ponytail21:
+    - 100050
+    - 400050
+    Bip001 Ponytail2Nub:
+    - 100052
+    - 400052
+    Bip001 Ponytail1Nub:
+    - 100054
+    - 400054
+    Bip001 Ponytail22:
+    - 100056
+    - 400056
+    Bip001 Ponytail12:
+    - 100058
+    - 400058
+    Bip001 Ponytail2:
+    - 100060
+    - 400060
+    Bip001 Ponytail1:
+    - 100062
+    - 400062
+    Bip001 Ponytail13:
+    - 100064
+    - 400064
+    Bip001 Head:
+    - 100066
+    - 400066
+    Bip001 Ponytail11:
+    - 100068
+    - 400068
+    Bip001 Neck3:
+    - 100070
+    - 400070
+    Bip001 HeadNub:
+    - 100072
+    - 400072
+    Bip001 Neck1:
+    - 100074
+    - 400074
+    Bip001 Neck4:
+    - 100076
+    - 400076
+    Bip001 TailNub:
+    - 100078
+    - 400078
+    Bip001 Neck2:
+    - 100080
+    - 400080
+    Bip001 Tail:
+    - 100082
+    - 400082
+    Bip001 Neck:
+    - 100084
+    - 400084
+    Bip001 R Toe22:
+    - 100086
+    - 400086
+    Bip001 Tail1:
+    - 100088
+    - 400088
+    Bip001 R Toe2:
+    - 100090
+    - 400090
+    Bip001 R Toe2Nub:
+    - 100092
+    - 400092
+    Bip001 R Toe12:
+    - 100094
+    - 400094
+    Bip001 R Toe21:
+    - 100096
+    - 400096
+    Bip001 R Toe1:
+    - 100098
+    - 400098
+    Bip001 R Toe1Nub:
+    - 100100
+    - 400100
+    Bip001 R Toe02:
+    - 100102
+    - 400102
+    Bip001 R Toe11:
+    - 100104
+    - 400104
+    Bip001 R Toe0:
+    - 100106
+    - 400106
+    Bip001 R Toe0Nub:
+    - 100108
+    - 400108
+    Bip001 R HorseLink:
+    - 100110
+    - 400110
+    Bip001 R Toe01:
+    - 100112
+    - 400112
+    Bip001 R Thigh:
+    - 100114
+    - 400114
+    Bip001 R Foot:
+    - 100116
+    - 400116
+    Bip001 L Toe22:
+    - 100118
+    - 400118
+    Bip001 R Calf:
+    - 100120
+    - 400120
+    Bip001 L Toe2:
+    - 100122
+    - 400122
+    Bip001 L Toe2Nub:
+    - 100124
+    - 400124
+    Bip001 L Toe12:
+    - 100126
+    - 400126
+    Bip001 L Toe21:
+    - 100128
+    - 400128
+    Bip001 L Toe1:
+    - 100130
+    - 400130
+    Bip001 L Toe1Nub:
+    - 100132
+    - 400132
+    Bip001 L Toe02:
+    - 100134
+    - 400134
+    Bip001 L Toe11:
+    - 100136
+    - 400136
+    Bip001 L Toe0:
+    - 100138
+    - 400138
+    Bip001 L Toe0Nub:
+    - 100140
+    - 400140
+    Bip001 L HorseLink:
+    - 100142
+    - 400142
+    Bip001 L Toe01:
+    - 100144
+    - 400144
+    Bip001 L Thigh:
+    - 100146
+    - 400146
+    Bip001 L Foot:
+    - 100148
+    - 400148
+    Bip001 Pelvis:
+    - 100150
+    - 400150
+    Bip001 L Calf:
+    - 100152
+    - 400152
+    Bip001:
+    - 100154
+    - 400154
+    Bip001 Spine:
+    - 100156
+    - 400156
+    Bip001 Footsteps:
+    - 100158
+    - 400158
+    default:
+    - 100160
+    - 400160
+    - 13700000
+AssetImporter:
+  importerVersion: 1
+  fileIDToRecycleName:
+    4300000: default
+    7400000: Take 001 //// CC_PROPORTION CHANGE HEAD ONLY
