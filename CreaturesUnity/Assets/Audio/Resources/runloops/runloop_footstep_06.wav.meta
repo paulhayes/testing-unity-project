@@ -1,0 +1,10 @@
+fileFormatVersion: 1
+guid: 8d5c48192940f45fc9c40d1315b77e7c
+AudioImporter:
+  importerVersion: 4
+  format: -1
+  quality: -1
+  3d: 1
+  forceToMono: 0
+  stream: 1
+  useHardware: 0
