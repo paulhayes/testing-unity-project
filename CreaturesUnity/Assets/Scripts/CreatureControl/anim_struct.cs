@@ -14,7 +14,7 @@ public class anim_struct
 	public string name;
 	public bool loop;
 	// TODO: replace with States.enem[]
-	public string[] labels;
+	public AnimationPoolState[] labels;
 	public string audioName;
 	public string mixingbone;
 	

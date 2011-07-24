@@ -24,9 +24,9 @@ ModelImporter:
     clips:
       StandingToWalkLoop:
         firstFrame: 0
-        lastFrame: 15
-        loop: 1
-        wrapMode: 2
+        lastFrame: 16
+        loop: 0
+        wrapMode: 1
       WalkLoop:
         firstFrame: 17
         lastFrame: 50
@@ -34,14 +34,14 @@ ModelImporter:
         wrapMode: 2
       WalkLoopLookAround:
         firstFrame: 52
-        lastFrame: 84
-        loop: 1
-        wrapMode: 2
+        lastFrame: 85
+        loop: 0
+        wrapMode: 1
       WalkLoopToStandIdle:
         firstFrame: 86
-        lastFrame: 116
-        loop: 1
-        wrapMode: 2
+        lastFrame: 117
+        loop: 0
+        wrapMode: 1
   nodeInfo:
     //RootNode:
     - 100000

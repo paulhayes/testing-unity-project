@@ -50,22 +50,26 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\Behave\CreatureTrees\TestBehaveLibraryInfo.txt" />
+     <Compile Include="Assets\Behave\Editor\BehaveAbout.cs" />
+     <Compile Include="Assets\Behave\Editor\BehaveAssetEditor.cs" />
+     <Compile Include="Assets\Behave\Editor\BehaveBrowser.cs" />
+     <Compile Include="Assets\Behave\Editor\BehaveComponentEditor.cs" />
+     <Compile Include="Assets\Behave\Editor\BehaveDebugWindow.cs" />
+     <Compile Include="Assets\Behave\Editor\BehaveEditor.cs" />
+     <Compile Include="Assets\Behave\Editor\BehaveMenu.cs" />
+     <Compile Include="Assets\Behave\Editor\BehaveTreeEditor.cs" />
+     <Compile Include="Assets\Behave\BehaveAsset.cs" />
+     <None Include="Assets\Behave\Changelog.txt" />
+     <None Include="Assets\Behave\License.txt" />
+     <None Include="Assets\Behave\Readme.txt" />
      <None Include="Assets\Models\animated\creatures\list.txt" />
-     <Compile Include="Assets\Scripts\Behave\Editor\BehaveAbout.cs" />
-     <Compile Include="Assets\Scripts\Behave\Editor\BehaveAssetEditor.cs" />
-     <Compile Include="Assets\Scripts\Behave\Editor\BehaveBrowser.cs" />
-     <Compile Include="Assets\Scripts\Behave\Editor\BehaveComponentEditor.cs" />
-     <Compile Include="Assets\Scripts\Behave\Editor\BehaveDebugWindow.cs" />
-     <Compile Include="Assets\Scripts\Behave\Editor\BehaveEditor.cs" />
-     <Compile Include="Assets\Scripts\Behave\Editor\BehaveMenu.cs" />
-     <Compile Include="Assets\Scripts\Behave\Editor\BehaveTreeEditor.cs" />
-     <Compile Include="Assets\Scripts\Behave\BehaveAsset.cs" />
-     <None Include="Assets\Scripts\Behave\Changelog.txt" />
-     <None Include="Assets\Scripts\Behave\License.txt" />
-     <None Include="Assets\Scripts\Behave\Readme.txt" />
      <Compile Include="Assets\Scripts\CreatureControl\AnimationController.cs" />
+     <Compile Include="Assets\Scripts\CreatureControl\AnimationProcedurals.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\Animation_Pool.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\AudioController.cs" />
+     <Compile Include="Assets\Scripts\CreatureControl\CreatureController.cs" />
+     <Compile Include="Assets\Scripts\CreatureControl\FirstBehaviourTree.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\MakeCreature.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\anim_struct.cs" />
      <Compile Include="Assets\Scripts\Editor\BuildAnimationClipsOnImport.cs" />
@@ -169,20 +173,23 @@
      <None Include="Assets\Standard Assets\Scripts\General Scripts\DragRigidbody.js" />
      <Compile Include="Assets\Standard Assets\Scripts\Utility Scripts\CombineChildren.cs" />
      <Compile Include="Assets\Standard Assets\Scripts\Utility Scripts\MeshCombineUtility.cs" />
+ <Reference Include="Assets\Behave\Compatibility\Behave">
+ <HintPath>Assets\Behave\Compatibility\Behave.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Behave\CreatureTrees\TestBehaveLibraryBuild">
+ <HintPath>Assets\Behave\CreatureTrees\TestBehaveLibraryBuild.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Behave\Editor\Behave.Unity.Editor">
+ <HintPath>Assets\Behave\Editor\Behave.Unity.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Behave\Behave.Unity.Assets">
+ <HintPath>Assets\Behave\Behave.Unity.Assets.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Behave\Behave.Unity.Runtime">
+ <HintPath>Assets\Behave\Behave.Unity.Runtime.dll</HintPath>
+ </Reference>
  <Reference Include="Assets\Plugins\KinectDataReceiver">
  <HintPath>Assets\Plugins\KinectDataReceiver.dll</HintPath>
- </Reference>
- <Reference Include="Assets\Scripts\Behave\Compatibility\Behave">
- <HintPath>Assets\Scripts\Behave\Compatibility\Behave.dll</HintPath>
- </Reference>
- <Reference Include="Assets\Scripts\Behave\Editor\Behave.Unity.Editor">
- <HintPath>Assets\Scripts\Behave\Editor\Behave.Unity.Editor.dll</HintPath>
- </Reference>
- <Reference Include="Assets\Scripts\Behave\Behave.Unity.Assets">
- <HintPath>Assets\Scripts\Behave\Behave.Unity.Assets.dll</HintPath>
- </Reference>
- <Reference Include="Assets\Scripts\Behave\Behave.Unity.Runtime">
- <HintPath>Assets\Scripts\Behave\Behave.Unity.Runtime.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

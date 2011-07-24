@@ -29,44 +29,44 @@ ModelImporter:
         wrapMode: 2
       StandingScratch:
         firstFrame: 35
-        lastFrame: 83
-        loop: 1
-        wrapMode: 2
+        lastFrame: 84
+        loop: 0
+        wrapMode: 1
       StandingForage:
         firstFrame: 85
-        lastFrame: 228
-        loop: 1
-        wrapMode: 2
+        lastFrame: 229
+        loop: 0
+        wrapMode: 1
       StandingSnapAtBug:
         firstFrame: 230
-        lastFrame: 268
-        loop: 1
-        wrapMode: 2
+        lastFrame: 269
+        loop: 0
+        wrapMode: 1
       StandingShiftWeight:
         firstFrame: 270
-        lastFrame: 303
-        loop: 1
-        wrapMode: 2
+        lastFrame: 304
+        loop: 0
+        wrapMode: 1
       StandingOpenMouth:
         firstFrame: 305
-        lastFrame: 338
-        loop: 1
-        wrapMode: 2
+        lastFrame: 339
+        loop: 0
+        wrapMode: 1
       StandingLookAround:
         firstFrame: 340
-        lastFrame: 418
-        loop: 1
-        wrapMode: 2
+        lastFrame: 419
+        loop: 0
+        wrapMode: 1
       StandingCommunicate01:
         firstFrame: 420
-        lastFrame: 483
-        loop: 1
-        wrapMode: 2
+        lastFrame: 484
+        loop: 0
+        wrapMode: 1
       StandingCommunicate02:
         firstFrame: 485
-        lastFrame: 583
-        loop: 1
-        wrapMode: 2
+        lastFrame: 584
+        loop: 0
+        wrapMode: 1
       StandingToLookLeft:
         firstFrame: 585
         lastFrame: 609
@@ -104,14 +104,14 @@ ModelImporter:
         wrapMode: 2
       LookRightLookAround:
         firstFrame: 825
-        lastFrame: 873
-        loop: 1
-        wrapMode: 2
+        lastFrame: 874
+        loop: 0
+        wrapMode: 1
       LookRightMouthOpen:
         firstFrame: 875
-        lastFrame: 898
-        loop: 1
-        wrapMode: 2
+        lastFrame: 899
+        loop: 0
+        wrapMode: 1
       LookRightToStanding:
         firstFrame: 900
         lastFrame: 924

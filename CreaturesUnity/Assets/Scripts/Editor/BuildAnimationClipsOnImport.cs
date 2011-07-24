@@ -98,7 +98,15 @@ public class BuildAnimationClipsOnImport : AssetPostprocessor
 				a.start = int.Parse(vals[5]);
 				a.end = int.Parse(vals[6]);
 				a.loop = bool.Parse(vals[7]);
-				a.labels = vals[10].Split(' ');
+				
+				string[] words = vals[10].ToUpper().Split(' ');
+				
+				a.labels = new AnimationPoolState[words.Length];
+				
+				for(int i = 0; i < words.Length; i++){
+					a.labels[i] = (AnimationPoolState) System.Enum.Parse(typeof(AnimationPoolState), words[i]);	
+				}
+
 				a.layer = int.Parse(vals[11]);
 				
 				if(vals.Length >= 13)

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-
-// ok, ok it's not a struct. But unity can't serialise structs
 [System.Serializable]
 public class Animation_Pool
 {
@@ -12,10 +10,7 @@ public class Animation_Pool
 	
 	public AnimationController parent;
 	
-	// could throw this away mostly using states
-	public string label = ""; 
-	
-	public States state;
+	public AnimationPoolState state;
 	
 	// Very important, used for the special case TRANSITION Pool
 	public bool isTransiton = false;
@@ -43,33 +38,30 @@ public class Animation_Pool
 	}
 	
 	
-	public void SetLabel(string s){
+	public void SetLabel(AnimationPoolState s){
+				
+		state = s;
 		
-		label = s;
-		
-		state = (States)System.Enum.Parse(typeof(States), label.ToUpper());
-		
-		if(label.ToLower().Equals("transition")){
+		if(state == AnimationPoolState.TRANSITION){
 			isTransiton = true;
 		}
 	}
 	
+	public bool isPlaying(string s)
+	{
+		return (currentPlaying.ToLower().Equals(s.ToLower()));
+		
+	}
 	
-	public int GetTransitionID(States current, States target)
+	public int GetTransitionID(AnimationPoolState current, AnimationPoolState target)
 	{
 		if(isTransiton){
-		
-		// fingers crossed everything is in UPPERCASE
-		// this could be avoided by converting the strings to ENUMS at load time
-		// Add that to a TODO
-			string a = current.ToString();
-			string b = target.ToString();
 			
 			for(int i = 0; i < anims.Count; i++)
 			{
-				if(anims[i].labels[1].Equals(a))
+				if(anims[i].labels[1] == current)
 				{
-					if(anims[i].labels[2].Equals(b))
+					if(anims[i].labels[2] == target)
 					{
 						return i;
 					}
@@ -85,7 +77,43 @@ public class Animation_Pool
 		anims.Add(a);
 		totalAnims = anims.Count;
 	}
+
 	
+	public void StartPlayback(GameObject target, int ID)
+	{	
+			
+		anim_struct a = (ID == -1)? GetRandomAnim() : anims[ID];
+		
+		currentPlaying = a.name;
+		
+		Debug.Log("Playing " + currentPlaying + " on " + state.ToString());				
+		
+		target.animation[currentPlaying].layer = 1; // a.layer;
+		
+//		if(a.loop){ target.animation[currentPlaying].wrapMode = WrapMode.Loop;
+//		}
+//		else{
+//			target.animation[currentPlaying].wrapMode = WrapMode.Once;
+//		}
+		
+		target.animation[currentPlaying].wrapMode = WrapMode.Once;
+		
+		target.animation.CrossFade(currentPlaying);
+
+		audioController.PlayAudio(a.audioName);
+
+		
+		currentAnimationLength = target.animation[currentPlaying].length;
+						
+		currentAnimationFinishTime = Time.time + currentAnimationLength;
+		
+		
+		parent.timeTillAnimationEnd = currentAnimationLength;
+		
+		
+		if(isTransiton) parent.leavingTransition = true;
+	
+	}
 	
 	
 	// this will eventually be replaced by weighted random decision
@@ -96,8 +124,10 @@ public class Animation_Pool
 		return anims[ currentIndex ];	
 	}
 	
+
 	
-	public IEnumerator StartPlayback(GameObject target, int ID)
+	
+	public IEnumerator StartRandomPlayback(GameObject target, int ID)
 	{	
 		if(Application.isPlaying)
 		{
@@ -114,13 +144,11 @@ public class Animation_Pool
 				
 				target.animation.CrossFade(currentPlaying);
 
-				
-				
-				
+
 				audioController.PlayAudio(a.audioName);
 				
 				currentAnimationLength = target.animation[currentPlaying].length;
-				
+								
 				currentAnimationFinishTime = Time.time + currentAnimationLength;
 				
 				if(isTransiton) parent.leavingTransition = true;
@@ -128,6 +156,56 @@ public class Animation_Pool
 				yield return new WaitForSeconds( currentAnimationLength );
 				
 			}
+		}
+	}
+	
+	public anim_struct GetNamedAnimation(string s )
+	{
+		
+		int index = AnimationIndex(s);
+		
+		return (index == -1) ? null : anims[index];
+		
+	}
+	
+	
+	public int AnimationIndex(string s )
+	{
+		for(int i = 0; i < totalAnims; i++){
+			if(anims[i].name.ToLower().Contains(s.ToLower())){
+				return i;
+			}
+		}
+		
+		Debug.LogWarning("no animations called " + s + " in pool " + state.ToString());
+		
+		return -1;
+	}
+	
+	
+	public void StartAdditivePlayback(GameObject target, PersonalityType ID)
+	{	
+		if(Application.isPlaying)
+		{
+		 
+			anim_struct a = GetNamedAnimation(ID.ToString());
+			
+			if(a == null) return;
+			
+			currentPlaying = a.name;
+			
+			Debug.Log("Playing " + currentPlaying + " on " + state.ToString());
+			
+			target.animation[currentPlaying].layer = 10;//a.layer;
+			//target.animation[currentPlaying].blendMode = AnimationBlendMode.Additive;
+			target.animation[currentPlaying].wrapMode = WrapMode.ClampForever;
+			target.animation[currentPlaying].enabled = true;
+			target.animation[currentPlaying].weight = 1.0f;
+			
+			target.animation.Play(currentPlaying);
+
+			//audioController.PlayAudio(a.audioName);
+		
 		}
 	}
 }

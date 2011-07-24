@@ -24,10 +24,11 @@ public class AudioController : MonoBehaviour {
 		}
 		
 		bool toldToPlay = false;
+		
 		int playingCount = 0;
 		
-		foreach(AudioSource a in sources){
-			
+		foreach(AudioSource a in sources)
+		{
 			playingCount ++;
 			
 			if(!a.isPlaying)

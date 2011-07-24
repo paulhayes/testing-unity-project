@@ -3,37 +3,73 @@ using System.Collections;
 using System.Collections.Generic;
 
 
-public enum States
+public enum AnimationPoolState
 {	
 	WALK = 1,
 	RUN,
 	SITTING,
 	STANDING,
-	TRANSITION,
+	ATTACKWALK,
+	ATTACKSTANCE,
 	LOOKLEFT,
 	LOOKRIGHT,
-	PROCEDURAL
+	HEAD,
+	TURN,
+	PROCEDURAL,
+	TRANSITION,
+	COMMUNICATION, // Start of potential future bug. See below
+	HIT,
+	LEFT,
+	RIGHT,
+	IDLE,
+	LOOK,
+	SCALE
+}
+
+// I'm sorting the animation pool array by the order of the enums above.
+// I then use the index of that enum to call the playback.
+// the problem is if there is no animation pool for that enum in the middle of the list
+// the order is wrong. 
+// SO for the time being I'm putting unsued animaitons to the bottom of the enum list.
+// A better idea is to use a dictionary but that won't display in the unity inspector. 
+
+
+public enum PersonalityType
+{
+	BABY = 1,
+	FEMALE,
+	FRENETIC,
+	ALPHA,
+	HEAD,
+	STANDARD
 }
 
 
 public class AnimationController : MonoBehaviour
 {
 	
-	public List<Animation_Pool> animation_pools;
-	
 	public AudioController audioController;
 	
 	public GameObject target;
 	
-	public States activeState = States.WALK;
+	public AnimationPoolState activeState = AnimationPoolState.STANDING;
 	
-	public States changeToState = States.WALK;
+	public AnimationPoolState changeToState = AnimationPoolState.STANDING;
+	
+	public int activeAnimation = 0;
 	
 	public bool inTransition = false;
 	
 	public bool leavingTransition = false;
 	
+	public PersonalityType personality = PersonalityType.STANDARD;
 	
+	public float timeTillAnimationEnd = 0.0f;
+	
+	
+	public float timeOfActivePool = 0.0f;
+	
+	public List<Animation_Pool> animation_pools;
 	
 	
 	void Start ()
@@ -73,21 +109,25 @@ public class AnimationController : MonoBehaviour
 			}
 		}
 		
-		animation_pools.Sort(CompareByStates);
+		animation_pools.Sort(CompareByAnimationPoolState);
 		
-		StartPlayback(activeState, 1.0f, -1);
+		
+		//StartProceduralPlayback(personality);
+		
+		
+		//StartPlayback(activeState, 1.0f, -1);
 	}
 	
 	
 	
 	// Only used to move character between animation pools.
 	// can be deleted later
-	public void OnGUI()
+	public void OnGUITemp()
 	{
 		
 		GUILayout.BeginArea(new Rect(10, 10, 100, 600));
 		
-		string[] names = System.Enum.GetNames(typeof(States));
+		string[] names = System.Enum.GetNames(typeof(AnimationPoolState));
 		
 		foreach (string a in names)
 		{
@@ -95,7 +135,9 @@ public class AnimationController : MonoBehaviour
 			
 		    if(GUILayout.Button(a))
 			{
-				changeToState = (States) System.Enum.Parse(typeof(States), a, true);
+				changeToState = (AnimationPoolState) System.Enum.Parse(typeof(AnimationPoolState), a, true);
+				
+				
 			}
 		}
 		
@@ -114,6 +156,8 @@ public class AnimationController : MonoBehaviour
 		{
 			inTransition = true;
 			
+			timeOfActivePool = 0.0f;
+			
 			TransitonAnimation(changeToState);
 		}
 		
@@ -121,32 +165,40 @@ public class AnimationController : MonoBehaviour
 		{	
 			leavingTransition = false;
 			
+			timeOfActivePool = 0.0f;
+			
 			ForcePlayAnimation(changeToState);
 
 		}
+		
+		timeOfActivePool += Time.deltaTime;
+		
+		timeTillAnimationEnd = GetTimeRemaining();
+		
 	}
 	
 	// Used to play an animation. At the moment it's called in Update at transition end
-	public void ForcePlayAnimation(States targetState)
+	public void ForcePlayAnimation(AnimationPoolState targetState)
 	{
-		
 		float waitTimeCurrentAnimation = StopCurrentAnimation();
 			
 		StartPlayback(targetState, waitTimeCurrentAnimation, -1);	
 	}
 	
 	
+
+	
+	
 	
 	// searches for correct transition animation and plays it after stopping current animation
-	public void TransitonAnimation(States targetState)
+	public void TransitonAnimation(AnimationPoolState targetState)
 	{
+		int transIndex = (int)AnimationPoolState.TRANSITION-1;
 		
-		int transitionID = animation_pools[(int)States.TRANSITION-1].GetTransitionID(activeState, targetState);
+		int transitionID = animation_pools[transIndex].GetTransitionID(activeState, targetState);
 		
-		// this is the bad guy. 
 		// TODO, figure out plan for missing transitions. 
 		// Could force crossfade when animation missing
-		// Have to look into how time is measured during crossfades.
 		if(transitionID == -1)
 		{
 			Debug.LogError("Animation missing for transition from " + activeState.ToString() +" to "+ targetState.ToString() );
@@ -163,22 +215,74 @@ public class AnimationController : MonoBehaviour
 			
 			float waitTimeCurrentAnimation = StopCurrentAnimation();
 			
-			StartPlayback(States.TRANSITION, waitTimeCurrentAnimation, transitionID);
+			StartPlayback(AnimationPoolState.TRANSITION, waitTimeCurrentAnimation, transitionID);
 			
 		}
 	}
 	
 	
 	// Just passing through to an IEnumerator. Maybe I should lose this.
-	public void StartPlayback(States toState, float startAtTime, int animIndex)
+	public void StartPlayback(AnimationPoolState toState, float startAtTime, int animIndex)
 	{	
-		StartCoroutine(RunAtTime(toState, startAtTime, animIndex));
+		StartCoroutine(RunRandomLoopTime(toState, startAtTime, animIndex));
+	}
+	
+
+		// Just passing through to an IEnumerator. Maybe I should lose this.
+	public int StartPlayback(string animName)
+	{	
+		
+		int animationID = animation_pools[(int)activeState -1].AnimationIndex(animName);
+		
+		if(animationID == -1)
+		{
+			// fuck there is no anmation
+			return -1;
+			
+		}
+		if(timeTillAnimationEnd <= 0.0f)
+		{
+			RunAnimation(activeState, animationID);
+			
+			return 1;
+		}
+		
+		
+		bool status = animation_pools[(int)activeState -1].isPlaying(animName);
+		
+		if(status == false)
+		{
+			
+			return -1;	
+		}
+		else
+		{
+
+			// not running, going to run next.
+			//RunAnimation(activeState, animationID);
+			
+			return 0;
+		}
+	}
+	
+	public void RunAnimation(AnimationPoolState toState, int animIndex)
+	{
+		
+		activeState = toState;
+		
+		int index = (int)toState -1;
+		
+		animation_pools[index].activeAnimationPool = true;
+		
+		animation_pools[index].StartPlayback(target, animIndex);
+		
+		// must remain in transition while not in the TRANSITION state
+		inTransition = (activeState == AnimationPoolState.TRANSITION);
+		
 	}
 	
 	
-	
-	
-	public IEnumerator RunAtTime(States toState, float t, int animIndex)
+	public IEnumerator RunRandomLoopTime(AnimationPoolState toState, float t, int animIndex)
 	{
 		// wait for set time
 		// this should coincide with the amount of time left in the currently running animation
@@ -192,10 +296,21 @@ public class AnimationController : MonoBehaviour
 		
 		animation_pools[index].activeAnimationPool = true;
 		
-		StartCoroutine(animation_pools[index].StartPlayback(target, animIndex));
+		//StartCoroutine(animation_pools[index].StartRandomPlayback(target, animIndex));
+		
+		animation_pools[index].StartPlayback(target, animIndex);
 		
 		// must remain in transition while not in the TRANSITION state
-		inTransition = (activeState == States.TRANSITION);
+		inTransition = (activeState == AnimationPoolState.TRANSITION);
+		
+	}
+	
+	public void StartProceduralPlayback(PersonalityType type)
+	{
+		
+		int index = (int)AnimationPoolState.PROCEDURAL -1 ;
+		
+		animation_pools[index].StartAdditivePlayback(target, type);
 		
 	}
 	
@@ -208,12 +323,19 @@ public class AnimationController : MonoBehaviour
 		
 		animation_pools[index].activeAnimationPool = false;	
 		
+		return GetTimeRemaining();
+	}
+	
+	public float GetTimeRemaining()
+	{
+		int index = (int)activeState -1;
+		
 		return animation_pools[index].currentAnimationFinishTime - Time.time;
 	}
 	
 	
-	// Sorts the Animation_Pool List so the (States -1) enum can be used as an index
-	private static int CompareByStates(Animation_Pool one, Animation_Pool two)
+	// Sorts the Animation_Pool List so the (AnimationPoolState -1) enum can be used as an index
+	private static int CompareByAnimationPoolState(Animation_Pool one, Animation_Pool two)
     {
 		int a = (int)one.state;
 		int b = (int)two.state;
@@ -223,9 +345,9 @@ public class AnimationController : MonoBehaviour
 	
 	
 	// used as a search operation when creating the Animation_Pools
-	int getIndex(List<Animation_Pool> arr, string s){
+	int getIndex(List<Animation_Pool> arr, AnimationPoolState a){
 	
-		for(int i = 0; i < arr.Count; i++) if(arr[i].label.Equals(s)) return i;	
+		for(int i = 0; i < arr.Count; i++) if(arr[i].state == a) return i;	
 		
 		return -1;
 	}
