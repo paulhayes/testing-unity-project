@@ -11,7 +11,30 @@ public class SkeletonManager : MonoBehaviour {
     public float kinectOffset = 0f;
 	
 	public GameObject emitter;
-
+	
+	string[] KinectJointIDLUT = {
+ 	"HipCenter",
+ 	"Spine",
+ 	"ShoulderCenter",
+ 	"Head",
+ 	"ShoulderLeft",
+ 	"ElbowLeft",
+ 	"WristLeft",
+ 	"HandLeft",
+ 	"ShoulderRight",
+ 	"ElbowRight",
+ 	"WristRight",
+ 	"HandRight",
+ 	"HipLeft",
+ 	"KneeLeft",
+ 	"AnkleLeft",
+ 	"FootLeft",
+ 	"HipRight",
+ 	"KneeRight",
+ 	"AnkleRight",
+ 	"FootRight"
+	};
+	
 //    public bool forcePowerOfTwo = true;			// Default: True (faster), False is much slower.
 //    public bool useMipmaps = false;		        // Default: False (faster), True is slower, but lets you scale texture.
 //	
@@ -77,7 +100,7 @@ public class SkeletonManager : MonoBehaviour {
 			//Debug.Log("Locking for listening");
             if (associatedListener.skeletonBuffer.Count > 0)
             {
-				Debug.Log("There is a skeleton");
+				//Debug.Log("There is a skeleton");
             	
 				for(int i = 0; i < associatedListener.skeletonBuffer.Count; i++){
 	                SkeletonData skeleton = associatedListener.skeletonBuffer[0];
@@ -90,7 +113,7 @@ public class SkeletonManager : MonoBehaviour {
 
     void ProcessSkeleton(SkeletonData skeleton, KinectTCPListener associatedListener)
     {
-		Debug.Log("ProcessSkeleton");
+		//Debug.Log("ProcessSkeleton");
 		
         if (skeleton.State == SkeletonState.New)
         {
@@ -116,6 +139,8 @@ public class SkeletonManager : MonoBehaviour {
 					cube.transform.localScale *= 0.1f;
 	                
 					cube.transform.parent = parent.transform;
+					
+					cube.GetComponent<MeshRenderer>().enabled = false;
 					
 					cubeSkeleton[i] = cube;
 					
@@ -164,7 +189,8 @@ public class SkeletonManager : MonoBehaviour {
 					//v3pos *= 10;
                     cubes[i].transform.position += (v3pos - cubes[i].transform.position ) * 0.2f;
 					
-					cubes[i].name = skeleton.Joints[i].ID.ToString();
+					
+					cubes[i].name = KinectJointIDLUT[(int)skeleton.Joints[i].ID];
                 }
             }
 			
@@ -173,7 +199,7 @@ public class SkeletonManager : MonoBehaviour {
         else if (skeleton.State == SkeletonState.ImageOnly)
         {
 			
-			Debug.Log("Got an image");
+			//Debug.Log("Got an image");
           /*  print("Setting Texture");
             
             // flip the depthmap as we create the texture	

@@ -6,29 +6,7 @@ using System.Collections.Generic;
 public class DrawSkeleton : MonoBehaviour
 {
 
-//public enum KinectJointID {
-//
-// 	HipCenter,
-// 	Spine,
-// 	ShoulderCenter,
-// 	Head,
-// 	ShoulderLeft,
-// 	ElbowLeft,
-// 	WristLeft,
-// 	HandLeft,
-// 	ShoulderRight,
-// 	ElbowRight,
-// 	WristRight,
-// 	HandRight,
-// 	HipLeft,
-// 	KneeLeft,
-// 	AnkleLeft,
-// 	FootLeft,
-// 	HipRight,
-// 	KneeRight,
-// 	AnkleRight,
-// 	FootRight
-//}
+
 	
 	List<GameObject> kids = new List<GameObject>();
 	
