@@ -37,16 +37,16 @@
     <Reference Include="System.XML" />
 	<Reference Include="System.Core" />
 	<Reference Include="UnityEngine">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
 	<Reference Include="Boo.Lang">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Mono/lib/mono/unity/Boo.Lang.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Mono/lib/mono/unity/Boo.Lang.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityScript">
-	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Mono/lib/mono/unity/UnityScript.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Mono/lib/mono/unity/UnityScript.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -67,12 +67,12 @@
      <Compile Include="Assets\Scripts\CreatureControl\AnimationController.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\AnimationProcedurals.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\Animation_Pool.cs" />
+     <Compile Include="Assets\Scripts\CreatureControl\anim_struct.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\AudioController.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\CreatureController.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\CreatureMovement.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\FirstBehaviourTree.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\MakeCreature.cs" />
-     <Compile Include="Assets\Scripts\CreatureControl\anim_struct.cs" />
      <Compile Include="Assets\Scripts\Editor\BuildAnimationClipsOnImport.cs" />
      <Compile Include="Assets\Scripts\Editor\CustomImportSettings.cs" />
      <Compile Include="Assets\Scripts\Editor\DisableTextureMaterials.cs" />
@@ -89,8 +89,9 @@
      <Compile Include="Assets\Scripts\Lismore\Creature.cs" />
      <Compile Include="Assets\Scripts\Lismore\CreatureDemo.cs" />
      <Compile Include="Assets\Scripts\Lismore\CreaturesControl.cs" />
-     <Compile Include="Assets\Scripts\Lismore\RenderVersion.cs" />
      <Compile Include="Assets\Scripts\Lismore\orthoScale.cs" />
+     <Compile Include="Assets\Scripts\Lismore\RenderVersion.cs" />
+     <Compile Include="Assets\Scripts\DrawSkeleton.cs" />
      <Compile Include="Assets\Scripts\KinectTCPListener.cs" />
      <Compile Include="Assets\Scripts\SkeletonManager.cs" />
      <None Include="Assets\Shaders\silhouette.shader" />
@@ -103,14 +104,14 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Apply.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\Luminance.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\Contrast Stretch\MinMaxReduction.shader" />
+     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\addalphahack.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\AddStuff.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\HollywoodFlareBlur.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\HollywoodFlareStretch.shader" />
+     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\lensflarecreate.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\VignetteShader.shader" />
-     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\addalphahack.shader" />
-     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\lensflarecreate.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\CopyDepthToRGBA.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfField.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfField31.shader" />
@@ -136,6 +137,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\EdgeDetectX.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ExtractSkyboxShader.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\FisheyeShader.shader" />
+     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\frag_ao.cginc" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowCompose.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowConeTap.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowEffectDownsample.shader" />
@@ -144,16 +146,15 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\MotionBlur.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderYUV.shader" />
-     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SSAOShader.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SepiaToneEffect.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ShowAlphaChannel.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SimpleClear.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SkyboxToRGBADepth.shader" />
+     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SSAOShader.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\SunShafts.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\TwirlEffect.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\VignettingShader.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\VortexEffect.shader" />
-     <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\frag_ao.cginc" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\BloomAndFlares.js" />
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\BlurEffect.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\ColorCorrectionCurves.js" />
@@ -174,8 +175,8 @@
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\NoiseEffect.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\PostEffectsBase.js" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\PostEffectsHelper.js" />
-     <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\SSAOEffect.cs" />
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\SepiaToneEffect.cs" />
+     <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\SSAOEffect.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\SunShafts.js" />
      <Compile Include="Assets\Standard Assets\Image Effects (Pro Only)\TwirlEffect.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Vignetting.js" />
@@ -189,31 +190,31 @@
      <None Include="Assets\Standard Assets\Scripts\General Scripts\DragRigidbody.js" />
      <Compile Include="Assets\Standard Assets\Scripts\Utility Scripts\CombineChildren.cs" />
      <Compile Include="Assets\Standard Assets\Scripts\Utility Scripts\MeshCombineUtility.cs" />
- <Reference Include="Assets\Behave\Compatibility\Behave">
+ <Reference Include="Behave">
  <HintPath>Assets\Behave\Compatibility\Behave.dll</HintPath>
  </Reference>
- <Reference Include="Assets\Behave\CreatureTrees\TestBehaveLibraryBuild">
+ <Reference Include="TestBehaveLibraryBuild">
  <HintPath>Assets\Behave\CreatureTrees\TestBehaveLibraryBuild.dll</HintPath>
  </Reference>
- <Reference Include="Assets\Behave\Editor\Behave.Unity.Editor">
+ <Reference Include="Behave.Unity.Editor">
  <HintPath>Assets\Behave\Editor\Behave.Unity.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Assets\Behave\Behave.Unity.Assets">
+ <Reference Include="Behave.Unity.Assets">
  <HintPath>Assets\Behave\Behave.Unity.Assets.dll</HintPath>
  </Reference>
- <Reference Include="Assets\Behave\Behave.Unity.Runtime">
+ <Reference Include="Behave.Unity.Runtime">
  <HintPath>Assets\Behave\Behave.Unity.Runtime.dll</HintPath>
  </Reference>
- <Reference Include="Assets\Plugins\KinectDataReceiver">
+ <Reference Include="KinectDataReceiver">
  <HintPath>Assets\Plugins\KinectDataReceiver.dll</HintPath>
  </Reference>
- <Reference Include="Assets\Scripts\Lismore\NITE\_Net\OpenNI.Net">
+ <Reference Include="OpenNI.Net">
  <HintPath>Assets\Scripts\Lismore\NITE\_Net\OpenNI.Net.dll</HintPath>
  </Reference>
- <Reference Include="Assets\Scripts\Lismore\NITE\_Net\Policy.1.3.XnVNITE.net_1_3_1">
+ <Reference Include="Policy.1.3.XnVNITE.net_1_3_1">
  <HintPath>Assets\Scripts\Lismore\NITE\_Net\Policy.1.3.XnVNITE.net_1_3_1.dll</HintPath>
  </Reference>
- <Reference Include="Assets\Scripts\Lismore\NITE\_Net\XnVNITE.net_1_3_1">
+ <Reference Include="XnVNITE.net_1_3_1">
  <HintPath>Assets\Scripts\Lismore\NITE\_Net\XnVNITE.net_1_3_1.dll</HintPath>
  </Reference>
   </ItemGroup>

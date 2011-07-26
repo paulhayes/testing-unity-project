@@ -9,6 +9,8 @@ public class SkeletonManager : MonoBehaviour {
     private KinectTCPListener associatedListener;
 
     public float kinectOffset = 0f;
+	
+	public GameObject emitter;
 
 //    public bool forcePowerOfTwo = true;			// Default: True (faster), False is much slower.
 //    public bool useMipmaps = false;		        // Default: False (faster), True is slower, but lets you scale texture.
@@ -102,6 +104,7 @@ public class SkeletonManager : MonoBehaviour {
 				parent.name = "User_Index_" + skeleton.UserIndex;
 				parent.transform.parent = gameObject.transform;
 				parent.AddComponent<DrawSkeleton>();
+				parent.GetComponent<DrawSkeleton>().prefab = emitter;
 				
 	            // Create cubes at each point...
 	            for (int i = 0; i < skeleton.Joints.Count; i++)
@@ -158,12 +161,14 @@ public class SkeletonManager : MonoBehaviour {
                     Vector3 v3pos = new Vector3(skeleton.Joints[i].Position.X + kinectOffset, skeleton.Joints[i].Position.Y, skeleton.Joints[i].Position.Z);
        //             print("X: "+ v3pos.x +", Y: "+ v3pos.y + ", Z: " + v3pos.z);
 					
-					v3pos *= 10;
-                    cubes[i].transform.position = v3pos;
+					//v3pos *= 10;
+                    cubes[i].transform.position += (v3pos - cubes[i].transform.position ) * 0.2f;
 					
 					cubes[i].name = skeleton.Joints[i].ID.ToString();
                 }
             }
+			
+			cubes[0].transform.parent.SendMessage("SkeletonUpdated");
         }
         else if (skeleton.State == SkeletonState.ImageOnly)
         {
