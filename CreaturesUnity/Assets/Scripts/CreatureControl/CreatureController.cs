@@ -13,6 +13,13 @@ public class CreatureController : MonoBehaviour
 	void Start ()
 	{
 		creatures = GameObject.FindGameObjectsWithTag("CREATURE");
+		
+		Transform wp = GameObject.Find("waypoints").transform;
+		
+        foreach (Transform child in wp)
+        {
+            targets.Add(child.gameObject);
+        }
 	}
 	
 	void AddTarget(GameObject g){
@@ -38,10 +45,9 @@ public class CreatureController : MonoBehaviour
 		}
 		
 		
-		
-		for(int i =  0; i < targets.Count; i++)
+		for(int i =  1; i < targets.Count; i++)
 		{
-			Debug.DrawLine(transform.position, targets[i].transform.position, Color.red);	
+			Debug.DrawLine(targets[i-1].transform.position, targets[i].transform.position, Color.red);	
 		}
 	}
 }

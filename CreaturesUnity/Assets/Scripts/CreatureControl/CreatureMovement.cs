@@ -87,11 +87,11 @@ public class CreatureMovement : MonoBehaviour
 		if (isMoving)
         {
 			if(firstMove){
-			//	MoveToRandomWaypoint(false);
+				MoveToRandomWaypoint(false);
 				firstMove = false;
 			}
 			
-            //UpdateMovement();
+            UpdateMovement();
         }
 	}
 	

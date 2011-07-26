@@ -23,15 +23,9 @@ public class KinectTCPListener : MonoBehaviour
 
         // Create a new Kinect Data receiver
         dataReceiver = new KinectDataReceiver(IPAddress);
-        //dataReceiver.UpdatedSkeletonDataEvent += new KinectViaTcp.EventHandler(OnKinectUpdatedSkeletonData);
+		dataReceiver.UpdatedSkeletonDataEvent += delegate(object sender, SkeletonData e) {};
+        dataReceiver.UpdatedSkeletonDataEvent += new KinectViaTcp.EventHandler(OnKinectUpdatedSkeletonData);
 		
-		dataReceiver.UpdatedSkeletonDataEvent += delegate(object sender, SkeletonData e) {
-			lock (skeletonBuffer)
-	        {
-	            skeletonBuffer.Add(e);
-	            Debug.Log("Updating skeleton");
-	        }
-		};
 	}
 
 
@@ -41,8 +35,14 @@ public class KinectTCPListener : MonoBehaviour
         lock (skeletonBuffer)
         {
             skeletonBuffer.Add(skeleton);
-            Debug.Log("Updating skeleton");
+            //Debug.Log("Updating skeleton");
         }
         //print("Possible data collision");
     }
+	
+	public void OnApplicationQuit(){
+		dataReceiver.UpdatedSkeletonDataEvent -= new KinectViaTcp.EventHandler(OnKinectUpdatedSkeletonData);
+	}
+	
+	
 }
