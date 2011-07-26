@@ -2,16 +2,31 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CreatureControl/AnimationController.cs">
     <Files>
-      <File FileName="Assets/Scripts/CreatureControl/AnimationController.cs" Line="262" Column="6" />
-      <File FileName="Assets/Scripts/Editor/CustomImportSettings.cs" Line="20" Column="3" />
-      <File FileName="Assets/Scripts/CreatureControl/AnimationProcedurals.cs" Line="66" Column="4" />
-      <File FileName="Assets/Scripts/CreatureControl/Animation_Pool.cs" Line="99" Column="61" />
-      <File FileName="Assets/Scripts/CreatureControl/AudioController.cs" Line="29" Column="3" />
-      <File FileName="Assets/Scripts/CreatureControl/MakeCreature.cs" Line="134" Column="14" />
-      <File FileName="Assets/Scripts/Editor/BuildAnimationClipsOnImport.cs" Line="109" Column="1" />
-      <File FileName="Assets/Scripts/CreatureControl/CreatureController.cs" Line="24" Column="4" />
-      <File FileName="Assets/Scripts/CreatureControl/FirstBehaviourTree.cs" Line="142" Column="1" />
+      <File FileName="Assets/Scripts/CreatureControl/CreatureMovement.cs" Line="90" Column="6" />
+      <File FileName="Assets/Scripts/CreatureControl/AnimationController.cs" Line="80" Column="74" />
+      <File FileName="Assets/Scripts/CreatureControl/CreatureController.cs" Line="8" Column="31" />
+      <File FileName="Assets/Scripts/Lismore/Creature.cs" Line="727" Column="16" />
+      <File FileName="Assets/Scripts/CreatureControl/Animation_Pool.cs" Line="89" Column="5" />
+      <File FileName="Assets/Scripts/CreatureControl/FirstBehaviourTree.cs" Line="130" Column="5" />
+      <File FileName="Assets/Scripts/CreatureControl/AnimationProcedurals.cs" Line="1" Column="1" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="CreaturesUnity" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="CreatureControl" expanded="True">
+                  <Node name="AnimationController.cs" selected="True" />
+                </Node>
+                <Node name="Editor" expanded="True" />
+                <Node name="Lismore" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

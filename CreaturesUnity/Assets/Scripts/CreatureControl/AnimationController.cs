@@ -62,7 +62,7 @@ public class AnimationController : MonoBehaviour
 	
 	public bool leavingTransition = false;
 	
-	public PersonalityType personality = PersonalityType.STANDARD;
+	public PersonalityType personality = PersonalityType.HEAD;
 	
 	public float timeTillAnimationEnd = 0.0f;
 	
@@ -112,7 +112,7 @@ public class AnimationController : MonoBehaviour
 		animation_pools.Sort(CompareByAnimationPoolState);
 		
 		
-		//StartProceduralPlayback(personality);
+		StartProceduralPlayback(personality);
 		
 		
 		//StartPlayback(activeState, 1.0f, -1);
@@ -224,6 +224,11 @@ public class AnimationController : MonoBehaviour
 	// Just passing through to an IEnumerator. Maybe I should lose this.
 	public void StartPlayback(AnimationPoolState toState, float startAtTime, int animIndex)
 	{	
+		if(toState != activeState && toState == AnimationPoolState.WALK){
+			SendMessage("NowWalking");
+		}
+		
+		
 		StartCoroutine(RunRandomLoopTime(toState, startAtTime, animIndex));
 	}
 	
@@ -268,7 +273,9 @@ public class AnimationController : MonoBehaviour
 	public void RunAnimation(AnimationPoolState toState, int animIndex)
 	{
 		
+
 		activeState = toState;
+		
 		
 		int index = (int)toState -1;
 		

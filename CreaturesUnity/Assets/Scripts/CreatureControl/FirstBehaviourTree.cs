@@ -95,6 +95,8 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	public BehaveResult TickShouldSitDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
 			
+		//if(isWalking) return BehaveResult.Failure;
+		
 		float roll = Random.value;
 		
 		if(roll > 0.9f && ac.timeOfActivePool > 10.0f)
@@ -105,10 +107,27 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 		return BehaveResult.Failure;
 		
 	}
-
+	
+	
+	
+	public bool stopMoving = false;
+	public bool isWalking = false;
+	
+	public void NowWalking(){
+		isWalking = true;
+	}
+	
+	public void Arrived(){
+		isWalking = false;
+		stopMoving = true;
+	}
+	
 	
 	public BehaveResult TickShouldStandDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
+		//if(stopMoving) return BehaveResult.Success;
+		
+		//if(isWalking) return BehaveResult.Failure;
 		
 		float roll = Random.value;
 		

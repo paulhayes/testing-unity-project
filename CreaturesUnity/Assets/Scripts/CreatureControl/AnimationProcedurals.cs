@@ -40,6 +40,7 @@ public class AnimationProcedurals : MonoBehaviour {
 	
 	void LateUpdate () 
 	{
+		if(lookAround != null){
 		if(looking)
 		{
 			Vector3 lookAtPosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Camera.main.pixelHeight/2, Camera.main.transform.position.z));
@@ -65,9 +66,9 @@ public class AnimationProcedurals : MonoBehaviour {
 			val -= (val - 0.5f) * 0.01f;	
 			
 			lookAround.normalizedTime = val;
-		}
+		}}
    
 		
-		if(lookAround == null) looking = false;
+		
 	}
 }

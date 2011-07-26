@@ -69,12 +69,28 @@
      <Compile Include="Assets\Scripts\CreatureControl\Animation_Pool.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\AudioController.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\CreatureController.cs" />
+     <Compile Include="Assets\Scripts\CreatureControl\CreatureMovement.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\FirstBehaviourTree.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\MakeCreature.cs" />
      <Compile Include="Assets\Scripts\CreatureControl\anim_struct.cs" />
      <Compile Include="Assets\Scripts\Editor\BuildAnimationClipsOnImport.cs" />
      <Compile Include="Assets\Scripts\Editor\CustomImportSettings.cs" />
      <Compile Include="Assets\Scripts\Editor\DisableTextureMaterials.cs" />
+     <Compile Include="Assets\Scripts\Lismore\NITE\_OpenGL_DataToTextures\OpenGLContext.cs" />
+     <Compile Include="Assets\Scripts\Lismore\NITE\_OpenGL_DataToTextures\Opengl_LabelToTexture.cs" />
+     <Compile Include="Assets\Scripts\Lismore\NITE\_Testing\TestImageonGuiTexture.cs" />
+     <Compile Include="Assets\Scripts\Lismore\NITE\OpenNIContext.cs" />
+     <Compile Include="Assets\Scripts\Lismore\NITE\OpenNILabelmapViewer.cs" />
+     <Compile Include="Assets\Scripts\Lismore\NITE\OpenNIMultipleSkeletonController.cs" />
+     <Compile Include="Assets\Scripts\Lismore\NITE\OpenNISingleSkeletonController.cs" />
+     <Compile Include="Assets\Scripts\Lismore\NITE\OpenNISkeleton.cs" />
+     <Compile Include="Assets\Scripts\Lismore\NITE\OpenNIUserTracker.cs" />
+     <Compile Include="Assets\Scripts\Lismore\BlurEffect.cs" />
+     <Compile Include="Assets\Scripts\Lismore\Creature.cs" />
+     <Compile Include="Assets\Scripts\Lismore\CreatureDemo.cs" />
+     <Compile Include="Assets\Scripts\Lismore\CreaturesControl.cs" />
+     <Compile Include="Assets\Scripts\Lismore\RenderVersion.cs" />
+     <Compile Include="Assets\Scripts\Lismore\orthoScale.cs" />
      <Compile Include="Assets\Scripts\KinectTCPListener.cs" />
      <Compile Include="Assets\Scripts\SkeletonManager.cs" />
      <None Include="Assets\Shaders\silhouette.shader" />
@@ -190,6 +206,15 @@
  </Reference>
  <Reference Include="Assets\Plugins\KinectDataReceiver">
  <HintPath>Assets\Plugins\KinectDataReceiver.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Scripts\Lismore\NITE\_Net\OpenNI.Net">
+ <HintPath>Assets\Scripts\Lismore\NITE\_Net\OpenNI.Net.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Scripts\Lismore\NITE\_Net\Policy.1.3.XnVNITE.net_1_3_1">
+ <HintPath>Assets\Scripts\Lismore\NITE\_Net\Policy.1.3.XnVNITE.net_1_3_1.dll</HintPath>
+ </Reference>
+ <Reference Include="Assets\Scripts\Lismore\NITE\_Net\XnVNITE.net_1_3_1">
+ <HintPath>Assets\Scripts\Lismore\NITE\_Net\XnVNITE.net_1_3_1.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

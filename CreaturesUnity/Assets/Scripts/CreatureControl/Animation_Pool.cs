@@ -86,7 +86,7 @@ public class Animation_Pool
 		
 		currentPlaying = a.name;
 		
-		Debug.Log("Playing " + currentPlaying + " on " + state.ToString());				
+		//Debug.Log("Playing " + currentPlaying + " on " + state.ToString());				
 		
 		target.animation[currentPlaying].layer = 1; // a.layer;
 		
