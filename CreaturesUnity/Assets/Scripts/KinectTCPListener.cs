@@ -11,31 +11,37 @@ public class KinectTCPListener : MonoBehaviour
     public bool usingBuffer = false;
 
     public delegate void UpdatedSkeletonDataHandler(SkeletonData skeleton);
-    public static event UpdatedSkeletonDataHandler onUnityUpdatedSkeletonData;
-
+    //public static event UpdatedSkeletonDataHandler onUnityUpdatedSkeletonData;
+	
+	KinectDataReceiver dataReceiver;
+	
+	
 	// Use this for initialization
-	void Start () 
+	void Awake() 
     {
         skeletonBuffer = new List<SkeletonData>();
 
         // Create a new Kinect Data receiver
-        KinectDataReceiver dataReceiver = new KinectDataReceiver(IPAddress);
-        dataReceiver.UpdatedSkeletonDataEvent += new KinectViaTcp.EventHandler(OnKinectUpdatedSkeletonData);
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-	    
+        dataReceiver = new KinectDataReceiver(IPAddress);
+        //dataReceiver.UpdatedSkeletonDataEvent += new KinectViaTcp.EventHandler(OnKinectUpdatedSkeletonData);
+		
+		dataReceiver.UpdatedSkeletonDataEvent += delegate(object sender, SkeletonData e) {
+			lock (skeletonBuffer)
+	        {
+	            skeletonBuffer.Add(e);
+	            Debug.Log("Updating skeleton");
+	        }
+		};
 	}
 
+
     // Respond to the Kinect events
-    private void OnKinectUpdatedSkeletonData(object sender, SkeletonData skeleton)
+    public void OnKinectUpdatedSkeletonData(object sender, SkeletonData skeleton)
     {
         lock (skeletonBuffer)
         {
             skeletonBuffer.Add(skeleton);
-            print("Updating skeleton");
+            Debug.Log("Updating skeleton");
         }
         //print("Possible data collision");
     }

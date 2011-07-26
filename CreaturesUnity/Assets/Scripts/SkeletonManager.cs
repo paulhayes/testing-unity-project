@@ -10,23 +10,23 @@ public class SkeletonManager : MonoBehaviour {
 
     public float kinectOffset = 0f;
 
-    public bool forcePowerOfTwo = true;			// Default: True (faster), False is much slower.
-    public bool useMipmaps = false;		        // Default: False (faster), True is slower, but lets you scale texture.
-	
-
-    private Texture2D depthMapTexture;	        // Unity Texture for displaying Kinect depth.
-    private Color[] depthMapColors;             // Unity colors array for kinect depth.
-    public Color depthColor = Color.yellow;
-
-    public GameObject depthCube;
-
-    private int actualFactor = 4;	            // User determined scaled forced to power-of-two, i.e. 1,2,4,8 etc	
-    private int rawWidth = 320;			            // Width of kinect source image in pixels.
-    private int rawHeight = 240;                      // Height of kinect source image in pixels.
-    private int potWidth;			            // Width of Power-of-two Unity Texture.
-    private int potHeight;			            // Height of Power-of-two Unity Texture.
-    private int dstWidth;			            // Width of scaled Image in Unity.
-    private int dstHeight;			            // Height of scaled Image in Unity.
+//    public bool forcePowerOfTwo = true;			// Default: True (faster), False is much slower.
+//    public bool useMipmaps = false;		        // Default: False (faster), True is slower, but lets you scale texture.
+//	
+//
+//    private Texture2D depthMapTexture;	        // Unity Texture for displaying Kinect depth.
+//    private Color[] depthMapColors;             // Unity colors array for kinect depth.
+//    public Color depthColor = Color.yellow;
+//
+//    public GameObject depthCube;
+//
+//    private int actualFactor = 4;	            // User determined scaled forced to power-of-two, i.e. 1,2,4,8 etc	
+//    private int rawWidth = 320;			            // Width of kinect source image in pixels.
+//    private int rawHeight = 240;                      // Height of kinect source image in pixels.
+//    private int potWidth;			            // Width of Power-of-two Unity Texture.
+//    private int potHeight;			            // Height of Power-of-two Unity Texture.
+//    private int dstWidth;			            // Width of scaled Image in Unity.
+//    private int dstHeight;			            // Height of scaled Image in Unity.
 
 
 
@@ -35,7 +35,7 @@ public class SkeletonManager : MonoBehaviour {
     {
         users = new Dictionary<int, GameObject[]>();
 
-        associatedListener = gameObject.GetComponent("KinectTCPListener") as KinectTCPListener;
+        associatedListener = (KinectTCPListener)gameObject.GetComponent<KinectTCPListener>();
 
 /*
 
@@ -71,58 +71,83 @@ public class SkeletonManager : MonoBehaviour {
     {
         lock (associatedListener.skeletonBuffer)
         {
+			
+			//Debug.Log("Locking for listening");
             if (associatedListener.skeletonBuffer.Count > 0)
             {
-                SkeletonData skeleton = associatedListener.skeletonBuffer[0];
-                associatedListener.skeletonBuffer.RemoveAt(0);
-                ProcessSkeleton(skeleton);
+				Debug.Log("There is a skeleton");
+            	
+				for(int i = 0; i < associatedListener.skeletonBuffer.Count; i++){
+	                SkeletonData skeleton = associatedListener.skeletonBuffer[0];
+	                associatedListener.skeletonBuffer.RemoveAt(0);
+	                ProcessSkeleton(skeleton, associatedListener);
+				}
             }
         }
 	}
 
-    void ProcessSkeleton(SkeletonData skeleton)
+    void ProcessSkeleton(SkeletonData skeleton, KinectTCPListener associatedListener)
     {
+		Debug.Log("ProcessSkeleton");
+		
         if (skeleton.State == SkeletonState.New)
         {
-            // Build up new skeleton prefab
-       //     print("Creating user: " + skeleton.UserIndex);
-            GameObject[] cubeSkeleton = new GameObject[skeleton.Joints.Count];
-
-            // Create cubes at each point...
-            for (int i = 0; i < skeleton.Joints.Count; i++)
-            {
-                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-               	
-				cube.transform.position = new Vector3(kinectOffset, 0.0f, 0.0f);
-                
-				cube.transform.localScale *= 0.1f;
-                
-				cube.transform.parent = gameObject.transform;
+			if (!users.ContainsKey(skeleton.UserIndex))
+			{
+			
+	            // Build up new skeleton prefab
+	       		// print("Creating user: " + skeleton.UserIndex);
+	            GameObject[] cubeSkeleton = new GameObject[skeleton.Joints.Count];
+				GameObject parent = new GameObject();
+				parent.name = "User_Index_" + skeleton.UserIndex;
+				parent.transform.parent = gameObject.transform;
+				parent.AddComponent<DrawSkeleton>();
 				
-				cubeSkeleton[i] = cube;
+	            // Create cubes at each point...
+	            for (int i = 0; i < skeleton.Joints.Count; i++)
+	            {
+	                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+	               	
+					cube.transform.position = new Vector3(kinectOffset, 0.0f, 0.0f);
+	                
+					cube.transform.localScale *= 0.1f;
+	                
+					cube.transform.parent = parent.transform;
+					
+					cubeSkeleton[i] = cube;
+					
+	            }
 				
-				
-            }
-            if (!users.ContainsKey(skeleton.UserIndex))
-            {
+				parent.SendMessage("BuildSkeleton");
+	            
                 users.Add(skeleton.UserIndex, cubeSkeleton);
             }
+			else{
+				skeleton.State = SkeletonState.Updated;	
+			}
+			
         }
-        else if (skeleton.State == SkeletonState.Removed)
+        
+		if (skeleton.State == SkeletonState.Removed)
         {
-    //        print("Removinguser: " + skeleton.UserIndex);
+    	//print("Removinguser: " + skeleton.UserIndex);
             GameObject[] cubes;
             if (users.TryGetValue(skeleton.UserIndex, out cubes))
             {
                 foreach (GameObject cube in cubes)
                 {
-                    Destroy(cube);
+                    //Destroy(cube);
                 }
+
+				//users.Remove(skeleton.UserIndex);
+				
+				//associatedListener.skeletonBuffer.Remove(skeleton);
+
             }
-            users.Remove(skeleton.UserIndex);
-        
         }
-        else if (skeleton.State == SkeletonState.Updated) // Update the skeleton
+        
+		
+		if (skeleton.State == SkeletonState.Updated) // Update the skeleton
         {
             GameObject[] cubes;
             if (users.TryGetValue(skeleton.UserIndex, out cubes))
@@ -132,12 +157,18 @@ public class SkeletonManager : MonoBehaviour {
                     // Get position of joint
                     Vector3 v3pos = new Vector3(skeleton.Joints[i].Position.X + kinectOffset, skeleton.Joints[i].Position.Y, skeleton.Joints[i].Position.Z);
        //             print("X: "+ v3pos.x +", Y: "+ v3pos.y + ", Z: " + v3pos.z);
+					
+					v3pos *= 10;
                     cubes[i].transform.position = v3pos;
+					
+					cubes[i].name = skeleton.Joints[i].ID.ToString();
                 }
             }
         }
         else if (skeleton.State == SkeletonState.ImageOnly)
         {
+			
+			Debug.Log("Got an image");
           /*  print("Setting Texture");
             
             // flip the depthmap as we create the texture	
