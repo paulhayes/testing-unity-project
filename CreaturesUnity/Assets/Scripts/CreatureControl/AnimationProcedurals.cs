@@ -15,7 +15,7 @@ public class AnimationProcedurals : MonoBehaviour {
 	
 	IEnumerator Start () {
 		
-		float scaleFactor = Random.Range( 0.7f, 1.1f);
+		float scaleFactor = Random.Range( 0.3f, 1.5f);
 		
 		transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 		

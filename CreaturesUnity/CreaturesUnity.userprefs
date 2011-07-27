@@ -1,7 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CreatureControl/FirstBehaviourTree.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CreatureControl/AnimationProcedurals.cs">
     <Files>
+      <File FileName="Assets/Scripts/CreatureControl/AnimationProcedurals.cs" Line="12" Column="2" />
       <File FileName="Assets/Scripts/CreatureControl/CreatureMovement.cs" Line="94" Column="15" />
       <File FileName="Assets/Scripts/CreatureControl/MakeCreature.cs" Line="170" Column="6" />
       <File FileName="Assets/Scripts/CreatureControl/anim_struct.cs" Line="18" Column="28" />
@@ -17,7 +18,7 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="CreatureControl" expanded="True">
-                  <Node name="FirstBehaviourTree.cs" selected="True" />
+                  <Node name="AnimationProcedurals.cs" selected="True" />
                 </Node>
                 <Node name="Editor" expanded="True" />
                 <Node name="Lismore" expanded="True" />
