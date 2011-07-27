@@ -1,17 +1,14 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\KinectTCPListener.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CreatureControl/FirstBehaviourTree.cs">
     <Files>
-      <File FileName="Assets\Scripts\SkeletonManager.cs" Line="9" Column="25" />
-      <File FileName="Assets\Scripts\CreatureControl\CreatureController.cs" Line="10" Column="55" />
-      <File FileName="Assets\Scripts\CreatureControl\CreatureMovement.cs" Line="132" Column="1" />
-      <File FileName="Assets\Scripts\CreatureControl\AnimationController.cs" Line="80" Column="74" />
-      <File FileName="Assets\Scripts\Lismore\Creature.cs" Line="727" Column="16" />
-      <File FileName="Assets\Scripts\CreatureControl\Animation_Pool.cs" Line="89" Column="5" />
-      <File FileName="Assets\Scripts\CreatureControl\FirstBehaviourTree.cs" Line="98" Column="3" />
-      <File FileName="Assets\Scripts\CreatureControl\AnimationProcedurals.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\DrawSkeleton.cs" Line="122" Column="1" />
-      <File FileName="Assets\Scripts\KinectTCPListener.cs" Line="28" Column="3" />
+      <File FileName="Assets/Scripts/CreatureControl/CreatureMovement.cs" Line="94" Column="15" />
+      <File FileName="Assets/Scripts/CreatureControl/MakeCreature.cs" Line="170" Column="6" />
+      <File FileName="Assets/Scripts/CreatureControl/anim_struct.cs" Line="18" Column="28" />
+      <File FileName="Assets/Scripts/CreatureControl/Animation_Pool.cs" Line="148" Column="79" />
+      <File FileName="Assets/Scripts/CreatureControl/AudioController.cs" Line="21" Column="6" />
+      <File FileName="Assets/Scripts/Editor/BuildAnimationClipsOnImport.cs" Line="112" Column="25" />
+      <File FileName="Assets/Scripts/CreatureControl/FirstBehaviourTree.cs" Line="154" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,10 +16,11 @@
           <Node name="CreaturesUnity" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="CreatureControl" expanded="True" />
+                <Node name="CreatureControl" expanded="True">
+                  <Node name="FirstBehaviourTree.cs" selected="True" />
+                </Node>
                 <Node name="Editor" expanded="True" />
                 <Node name="Lismore" expanded="True" />
-                <Node name="KinectTCPListener.cs" selected="True" />
               </Node>
             </Node>
           </Node>
