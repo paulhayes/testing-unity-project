@@ -44,7 +44,7 @@ public class MakeCreature : MonoBehaviour {
 						
 			target.animation.Play(currentAnimation);
 			
-			audioController.PlayAudio(animClips[animationIndex].audioName);
+			audioController.PlayAudio(animClips[animationIndex].audioName[Random.Range(0, animClips[animationIndex].audioName.Length)]);
 			
 			// get animaton length through accessing the AnimationState
 			yield return new WaitForSeconds( target.animation[currentAnimation].length );
@@ -140,7 +140,7 @@ public class MakeCreature : MonoBehaviour {
 					a.labels[i] = (AnimationPoolState) System.Enum.Parse(typeof(AnimationPoolState), words[i]);	
 				}
 				
-				a.audioName = vals[8];
+				
 				
 				a.layer = int.Parse(vals[11]);
 				
@@ -149,7 +149,24 @@ public class MakeCreature : MonoBehaviour {
 					if(vals[12].Length > 0)
 					{
 						a.mixingbone = vals[12];	
-					}				
+					}
+					
+					a.audioName = new string[vals.Length - 13];
+					
+					int count = 0;
+					
+					for(int i = 13; i < vals.Length; i++){
+						
+						a.audioName[count] = vals[i];
+						
+						count++;
+					}
+					
+				}
+				else{
+					a.audioName = new string[1];
+					a.audioName[0] = "";
+					
 				}
 				
 				// turn this on if looped animations are out one frame

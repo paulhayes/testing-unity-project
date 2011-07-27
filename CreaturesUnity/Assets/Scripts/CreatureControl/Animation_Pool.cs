@@ -100,7 +100,7 @@ public class Animation_Pool
 		
 		target.animation.CrossFade(currentPlaying);
 
-		audioController.PlayAudio(a.audioName);
+		audioController.PlayAudio(a.audioName[Random.Range(0, a.audioName.Length)]);
 
 		
 		currentAnimationLength = target.animation[currentPlaying].length;
@@ -145,7 +145,7 @@ public class Animation_Pool
 				target.animation.CrossFade(currentPlaying);
 
 
-				audioController.PlayAudio(a.audioName);
+				audioController.PlayAudio(a.audioName[Random.Range(0, a.audioName.Length)]);
 				
 				currentAnimationLength = target.animation[currentPlaying].length;
 								

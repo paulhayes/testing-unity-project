@@ -3,12 +3,11 @@ using System.Collections;
 
 public class AudioController : MonoBehaviour {
 	
-	
 	public AudioSource[] sources;
 	
 	public string message;
 	
-	// Use this for initialization
+
 	void Start () {
 		
 		sources = (AudioSource[])gameObject.GetComponentsInChildren<AudioSource>();
@@ -19,7 +18,7 @@ public class AudioController : MonoBehaviour {
 	{
 		if(s == null) 
 		{
-			Debug.Log("no audio sources");
+			//Debug.Log("no audio sources");
 			return;
 		}
 		
@@ -45,9 +44,10 @@ public class AudioController : MonoBehaviour {
 			}
 		}
 		
-		message = (toldToPlay) ? s + " on source " + playingCount : "No free AudioSource";
+		message = (toldToPlay) ? s + " on source " + playingCount : " No free AudioSource";
 		
-		if(!toldToPlay){
+		if(!toldToPlay)
+		{
 			Debug.LogWarning("No free AudioSource");
 		}
 	}

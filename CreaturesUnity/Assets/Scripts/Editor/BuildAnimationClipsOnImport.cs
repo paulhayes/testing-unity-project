@@ -114,7 +114,24 @@ public class BuildAnimationClipsOnImport : AssetPostprocessor
 					if(vals[12].Length > 0)
 					{
 						a.mixingbone = vals[12];	
-					}				
+					}
+					
+					a.audioName = new string[vals.Length - 13];
+					
+					int count = 0;
+					
+					for(int i = 13; i < vals.Length; i++){
+						
+						a.audioName[count] = vals[i];
+						
+						count++;
+					}
+					
+				}
+				else{
+					a.audioName = new string[1];
+					a.audioName[0] = "";
+					
 				}
 				
 				// turn this on if looped animations are out one frame
