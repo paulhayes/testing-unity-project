@@ -12,6 +12,17 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	
 	public AnimationController ac;
 	
+		
+	public bool stopMoving = false;
+	public bool isWalking = false;
+	public bool moveToTarget = false;
+	
+	
+	public GameObject movementTarget;
+	
+	
+
+	
 	
 	IEnumerator Start () 
 	{
@@ -59,42 +70,13 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	}
 	
 	
-	public BehaveResult TickPlayAnimAction(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
-	{
-		// use action chance to decide on running animation
-
-		float roll = Random.value;
-		
-		// Debug.Log(roll + " " + floatParameter + " " + stringParameter);
-		
-		if( floatParameter >= roll  || floatParameter < 0 )
-		{
-			int val = ac.StartPlayback(stringParameter);
-			
-			switch (val)
-			{
-				case -1:
-					//Debug.LogWarning(stringParameter + " returned a fail");
-					return BehaveResult.Failure;
-				
-				case 0:
-					//Debug.Log(stringParameter + " returned a running");
-					return BehaveResult.Running;
-				
-				case 1:
-					//Debug.Log(stringParameter + " returned a success");
-					return BehaveResult.Success;
-			}
-		}
-		
-		return BehaveResult.Success;
-		
-	}
 	
+	
+	#region DescideToDoStuff
 	
 	public BehaveResult TickShouldSitDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
-			
+		
 		//if(isWalking) return BehaveResult.Failure;
 		
 		float roll = Random.value;
@@ -107,20 +89,9 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 		return BehaveResult.Failure;
 		
 	}
+
 	
 	
-	
-	public bool stopMoving = false;
-	public bool isWalking = false;
-	
-	public void NowWalking(){
-		isWalking = true;
-	}
-	
-	public void Arrived(){
-		isWalking = false;
-		stopMoving = true;
-	}
 	
 	
 	public BehaveResult TickShouldStandDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
@@ -140,10 +111,10 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	}
 	
 	
-	
 	public BehaveResult TickShouldWalkDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
 		
+		if(moveToTarget) return BehaveResult.Success;
 		
 //		float roll = Random.value;
 //		
@@ -177,6 +148,10 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 		return BehaveResult.Success;
 	}
 	
+	#endregion
+	
+	
+	#region Misc Decorators
 	
 	
 	public BehaveResult TickRunForeverDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
@@ -201,6 +176,42 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 		return (ac.activeState != check) ? BehaveResult.Success : BehaveResult.Failure;
 	}
 	
+	#endregion
+	
+	
+	#region Actions
+	
+	public BehaveResult TickPlayAnimAction(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
+	{
+		// use action chance to decide on running animation
+
+		float roll = Random.value;
+		
+		// Debug.Log(roll + " " + floatParameter + " " + stringParameter);
+		
+		if( floatParameter >= roll  || floatParameter < 0 )
+		{
+			int val = ac.StartPlayback(stringParameter);
+			
+			switch (val)
+			{
+				case -1:
+					//Debug.LogWarning(stringParameter + " returned a fail");
+					return BehaveResult.Failure;
+				
+				case 0:
+					//Debug.Log(stringParameter + " returned a running");
+					return BehaveResult.Running;
+				
+				case 1:
+					//Debug.Log(stringParameter + " returned a success");
+					return BehaveResult.Success;
+			}
+		}
+		
+		return BehaveResult.Success;
+		
+	}
 	
 	
 	
@@ -228,6 +239,50 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 		
 		return BehaveResult.Failure;	
 	}	
+	
+	
+	
+	public BehaveResult TickMoveToLocationAction(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
+	{
+		
+		if(Vector3.Distance(transform.position, movementTarget.transform.position)  > 2)
+		{
+			
+			Vector3 dir = movementTarget.transform.position - transform.position;
+			
+			//transform.rotation = Quaternion.Slerp(transform.forward, new Quaternion.LookRotation(dir), Time.deltaTime);
+			
+			transform.position += transform.forward * Time.deltaTime;
+			
+			return BehaveResult.Success;
+			
+		}
+		
+		
+		return BehaveResult.Failure;
+		
+	}
+	
+	#endregion
+	
+	public void MoveToNewTarget(GameObject g){
+		
+		movementTarget = g; 
+		moveToTarget = true;
+		
+	}
+	
+	
+	public void NowWalking(){
+		isWalking = true;
+	}
+	
+	public void Arrived(){
+		isWalking = false;
+		stopMoving = true;
+	}
+	
+	
 	
 	
 	public void Reset (Tree sender)
