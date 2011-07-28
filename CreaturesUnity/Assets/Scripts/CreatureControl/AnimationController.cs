@@ -258,7 +258,7 @@ public class AnimationController : MonoBehaviour
 		if(status == false)
 		{
 			
-			return -1;	
+			return 0;	
 		}
 		else
 		{

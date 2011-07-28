@@ -29,8 +29,9 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 		
 		if(target != null) ac = (AnimationController)target.GetComponent<AnimationController>();
 		
-		m_Tree = BLTestBehaveLibrary.InstantiateTree(BLTestBehaveLibrary.TreeType.Standing_Bored, this);
+		m_Tree = BLtestbehavelibrary.InstantiateTree(BLtestbehavelibrary.TreeType.Standing_Bored, this);
 	
+		
 		// this is just to get them out of sync
 		yield return new WaitForSeconds( Random.Range(0f, 1.0f) );
 		
@@ -52,7 +53,7 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	public BehaveResult Tick (Tree sender, bool init)
 	{
 		
-		bool isAction = (BLTestBehaveLibrary.IsAction(sender.ActiveID));
+		bool isAction = (BLtestbehavelibrary.IsAction(sender.ActiveID));
 		
 		Debug.LogWarning(
 		          "Got Ticked by unhandled " +
@@ -60,9 +61,9 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 		          (isAction ? "action " : "decorator ") + 
 		          
 		          (isAction ?
-		          	((BLTestBehaveLibrary.ActionType)sender.ActiveID).ToString() 
+		          	((BLtestbehavelibrary.ActionType)sender.ActiveID).ToString() 
 		           	:
-		          	((BLTestBehaveLibrary.DecoratorType)sender.ActiveID).ToString() 
+		          	((BLtestbehavelibrary.DecoratorType)sender.ActiveID).ToString() 
 		          )
 		);
 		
@@ -77,7 +78,7 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	public BehaveResult TickShouldSitDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
 		
-		//if(isWalking) return BehaveResult.Failure;
+		if(isWalking) return BehaveResult.Failure;
 		
 		float roll = Random.value;
 		
@@ -96,9 +97,9 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	
 	public BehaveResult TickShouldStandDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
-		//if(stopMoving) return BehaveResult.Success;
+		if(stopMoving) return BehaveResult.Success;
 		
-		//if(isWalking) return BehaveResult.Failure;
+		if(isWalking) return BehaveResult.Failure;
 		
 		float roll = Random.value;
 		
@@ -130,12 +131,12 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	public BehaveResult TickShouldAttackDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
 		
-//		float roll = Random.value;
-//		
-//		if(roll > 0.5f && ac.timeOfActivePool > 10.0f)
-//		{
-//			return BehaveResult.Success;
-//		}
+		float roll = Random.value;
+		
+		if(roll > 0.5f && ac.timeOfActivePool > 10.0f)
+		{
+			return BehaveResult.Success;
+		}
 		
 		return BehaveResult.Failure;
 	}	
@@ -183,8 +184,9 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	
 	public BehaveResult TickPlayAnimAction(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
-		// use action chance to decide on running animation
 
+		
+		
 		float roll = Random.value;
 		
 		// Debug.Log(roll + " " + floatParameter + " " + stringParameter);
@@ -245,19 +247,14 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	public BehaveResult TickMoveToLocationAction(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
 		
-		if(Vector3.Distance(transform.position, movementTarget.transform.position)  > 2)
+		if(Vector3.Distance(transform.position, movementTarget.transform.position)  > 4)
 		{
-			
-			Vector3 dir = movementTarget.transform.position - transform.position;
-			
-			//transform.rotation = Quaternion.Slerp(transform.forward, new Quaternion.LookRotation(dir), Time.deltaTime);
-			
-			transform.position += transform.forward * Time.deltaTime;
-			
+			NowWalking();
 			return BehaveResult.Success;
 			
 		}
 		
+		Arrived();
 		
 		return BehaveResult.Failure;
 		
@@ -265,7 +262,31 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	
 	#endregion
 	
-	public void MoveToNewTarget(GameObject g){
+	void Update()
+	{
+		if(isWalking)
+		{
+		
+			Vector3 dir = movementTarget.transform.position - transform.position;
+			
+			Quaternion toAngle = Quaternion.LookRotation(dir);
+			
+			transform.rotation = Quaternion.Slerp(transform.rotation, toAngle, Time.deltaTime);
+			
+			transform.position += transform.forward * Time.deltaTime * 2;
+			
+			Debug.DrawLine(transform.position, movementTarget.transform.position);
+			
+			if(Vector3.Distance(transform.position, movementTarget.transform.position)  < 4) Arrived();
+			
+		}
+		
+		isWalking = (ac.activeState == AnimationPoolState.WALK || ac.activeState == AnimationPoolState.ATTACKWALK) ? true : false;
+	}
+	
+	
+	public void MoveToNewTarget(GameObject g)
+	{
 		
 		movementTarget = g; 
 		moveToTarget = true;
@@ -273,12 +294,16 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	}
 	
 	
-	public void NowWalking(){
+	public void NowWalking()
+	{
 		isWalking = true;
+		stopMoving = false;
 	}
 	
-	public void Arrived(){
-		isWalking = false;
+	public void Arrived()
+	{
+		
+		moveToTarget = false;
 		stopMoving = true;
 	}
 	

@@ -11,7 +11,10 @@ public class DrawSkeleton : MonoBehaviour
 	List<GameObject> kids = new List<GameObject>();
 	
 	List<GameObject> smoke = new List<GameObject>();
-
+	
+	CreatureController CCcontrol;
+	
+	
 	public GameObject prefab;
 	
 	private float timeSinceUpdated = 0;
@@ -20,6 +23,7 @@ public class DrawSkeleton : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+		CCcontrol = (CreatureController)GameObject.Find("Controller").GetComponent<CreatureController>();
 		
 	}
 	
@@ -68,7 +72,9 @@ public class DrawSkeleton : MonoBehaviour
 			GL.PushMatrix();
 			GL.Begin(GL.LINES);
 			
-			GL.Color(Color.black);	
+			GL.Color(Color.white);	
+			
+			float currentX = -100;
 			
 			for(int i = 1; i < kids.Count; i++)
 			{
@@ -84,6 +90,7 @@ public class DrawSkeleton : MonoBehaviour
 				GL.Vertex(kids[i-1].transform.position);
 				GL.Vertex(kids[i].transform.position);
 				
+				if(kids[i].name.Equals("Spine")) currentX = kids[i].transform.position.x;
 				
 	//			if(kids[i].name.Equals("WristLeft"))
 	//			{
@@ -98,6 +105,10 @@ public class DrawSkeleton : MonoBehaviour
 			
 			GL.End();	
 			GL.PopMatrix();
+			
+			if(currentX != -100){
+				CCcontrol.UpdatedSkeletonPosition(currentX);
+			}
 		}
 		else{
 			for(int i = 1; i < smoke.Count; i++)

@@ -3,18 +3,18 @@ using System.Collections;
 
 public class orthoScale : MonoBehaviour {
 
-    private float defaultHeight;
+    private float defaultHeight = 1;
     public float fudgeFactor = 1;
 
 	// Use this for initialization
 	void Start () 
 	{
         //defaultHeight = transform.Find("creature").GetComponent<Creature>().sizeMultiplier;
-        defaultHeight = transform.GetComponent<Creature>().sizeMultiplier;
-        if (defaultHeight == 0)
-        {
-            defaultHeight = 1;
-        }
+//        defaultHeight = transform.GetComponent<Creature>().sizeMultiplier;
+//        if (defaultHeight == 0)
+//        {
+//            defaultHeight = 1;
+//        }
 	}
 	
 	// Update is called once per frame

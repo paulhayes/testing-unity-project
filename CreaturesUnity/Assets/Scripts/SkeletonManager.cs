@@ -186,7 +186,7 @@ public class SkeletonManager : MonoBehaviour {
                 for (int i = 0; i < skeleton.Joints.Count; i++)
                 {
                     // Get position of joint
-                    Vector3 v3pos = new Vector3((skeleton.Joints[i].Position.X + kinectOffset) * -1.0f, skeleton.Joints[i].Position.Y+kinectOffsetY, skeleton.Joints[i].Position.Z);
+                    Vector3 v3pos = new Vector3((skeleton.Joints[i].Position.X * -1.0f) + kinectOffset, skeleton.Joints[i].Position.Y+kinectOffsetY, skeleton.Joints[i].Position.Z);
        //             print("X: "+ v3pos.x +", Y: "+ v3pos.y + ", Z: " + v3pos.z);
 					
 					//v3pos *= 10;

@@ -1,5 +1,5 @@
 Library class:
-BLTestBehaveLibrary
+BLtestbehavelibrary
 
 Trees:
 	Standing_Bored
@@ -8,6 +8,7 @@ Trees:
 	Standing_Walking
 	Standing_TransitionToStanding
 	Standing_TransitionToWalking
+	Standing_Attackstance
 	Unknown
 
 Contexts:
@@ -16,19 +17,20 @@ Contexts:
 Branch priority groups:
 	Unknown
 
-Actions (2: 1 - 3):
+Actions (3: 1 - 4):
 	DoTransition (1)
 	PlayAnim (2)
-	Unknown (3)
+	MoveToLocation (3)
+	Unknown (4)
 
-Decorators (7: 4 - 11):
-	ShouldSit (4)
-	ShouldStand (5)
-	ShouldCommunicate (6)
-	CheckActiveState (7)
-	ShouldWalk (8)
-	ShouldAttack (9)
-	CheckIsntActiveState (10)
-	Unknown (11)
+Decorators (7: 5 - 12):
+	ShouldSit (5)
+	ShouldStand (6)
+	ShouldCommunicate (7)
+	CheckActiveState (8)
+	ShouldWalk (9)
+	ShouldAttack (10)
+	CheckIsntActiveState (11)
+	Unknown (12)
 
 Agent classes:
