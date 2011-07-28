@@ -9,6 +9,9 @@ public class SkeletonManager : MonoBehaviour {
     private KinectTCPListener associatedListener;
 
     public float kinectOffset = 0f;
+    public float kinectOffsetY = 0f;
+	public float kinectScale = 0.4f;
+
 	
 	public GameObject emitter;
 	
@@ -134,7 +137,7 @@ public class SkeletonManager : MonoBehaviour {
 	            {
 	                GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
 	               	
-					cube.transform.position = new Vector3(kinectOffset, 0.0f, 0.0f);
+					cube.transform.position = new Vector3(kinectOffset, kinectOffsetY, 0.0f);
 	                
 					cube.transform.localScale *= 0.1f;
 	                
@@ -183,11 +186,11 @@ public class SkeletonManager : MonoBehaviour {
                 for (int i = 0; i < skeleton.Joints.Count; i++)
                 {
                     // Get position of joint
-                    Vector3 v3pos = new Vector3(skeleton.Joints[i].Position.X + kinectOffset, skeleton.Joints[i].Position.Y, skeleton.Joints[i].Position.Z);
+                    Vector3 v3pos = new Vector3((skeleton.Joints[i].Position.X + kinectOffset) * -1.0f, skeleton.Joints[i].Position.Y+kinectOffsetY, skeleton.Joints[i].Position.Z);
        //             print("X: "+ v3pos.x +", Y: "+ v3pos.y + ", Z: " + v3pos.z);
 					
 					//v3pos *= 10;
-                    cubes[i].transform.position += (v3pos - cubes[i].transform.position ) * 0.2f;
+                    cubes[i].transform.position += (v3pos - cubes[i].transform.position ) * kinectScale;
 					
 					
 					cubes[i].name = KinectJointIDLUT[(int)skeleton.Joints[i].ID];
