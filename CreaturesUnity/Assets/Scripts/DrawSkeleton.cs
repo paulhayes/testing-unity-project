@@ -19,6 +19,8 @@ public class DrawSkeleton : MonoBehaviour
 	
 	private float timeSinceUpdated = 0;
 	
+	private bool firstUpdate = true; 
+	
 	
 	// Use this for initialization
 	void Start ()
@@ -44,6 +46,7 @@ public class DrawSkeleton : MonoBehaviour
 		}
 		
 		kids.Sort(CompareByKinectState);
+		
 	}
 	
 	
@@ -52,13 +55,19 @@ public class DrawSkeleton : MonoBehaviour
 		
 		for(int i = 0; i < kids.Count; i++)
 		{
-			if(kids[i].name.Equals(s)) return kids[i].transform;
+			if(kids[i].name.ToLower().Equals(s)) return kids[i].transform;
 		}
 		return null;
 	}
 	
 	public void SkeletonUpdated(){
 	
+		if(firstUpdate){
+			CCcontrol.NewUserAppeared(getChildByName("spine"));
+		}
+		
+		firstUpdate = false;
+		
 		timeSinceUpdated = 0f;
 		
 	}

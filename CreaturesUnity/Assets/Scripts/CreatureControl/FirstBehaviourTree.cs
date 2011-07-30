@@ -101,6 +101,8 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 		
 		if(isWalking) return BehaveResult.Failure;
 		
+		if(isLooking) return BehaveResult.Success;
+		
 		float roll = Random.value;
 		
 		if(roll > 0.95f && ac.timeOfActivePool > 10.0f){
@@ -147,6 +149,49 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	{
 		
 		return BehaveResult.Success;
+	}
+	
+	
+	public bool newPerson = false;
+	
+	Transform newUserPosition;
+	
+	public bool lookLeft = true;
+	
+	public bool isLooking = false;
+	
+	
+	
+	public void LookToNewUser(Transform t){
+	
+		newUserPosition = t;
+		
+		if(transform.position.x > t.position.x) lookLeft = false;
+		
+		newPerson = true;
+	}
+	
+	public BehaveResult TickLookDirectionDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
+	{
+		if(stringParameter.Equals("LEFT"))
+		{
+			return (lookLeft) ? BehaveResult.Success : BehaveResult.Failure;
+		}
+		else{
+		
+			return (lookLeft == false) ? BehaveResult.Success : BehaveResult.Failure;
+		}
+	}
+	
+	public BehaveResult TickShouldLookDecorator(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
+	{
+		if(newPerson)
+		{
+			newPerson = false;	
+			return BehaveResult.Success;
+		}
+		
+		return BehaveResult.Failure;
 	}
 	
 	#endregion
@@ -221,7 +266,7 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 	public BehaveResult TickDoTransitionAction(Tree sender, string stringParameter, float floatParameter, IAgent agent, object data)
 	{
 		
-		Debug.Log("Time to transition out " + stringParameter);
+		//Debug.Log("Time to transition out " + stringParameter);
 		
 		string[] words = stringParameter.ToUpper().Split(' ');
 				
@@ -282,6 +327,8 @@ public class FirstBehaviourTree : MonoBehaviour, IAgent
 		}
 		
 		isWalking = (ac.activeState == AnimationPoolState.WALK || ac.activeState == AnimationPoolState.ATTACKWALK) ? true : false;
+		
+		isLooking = (ac.activeState == AnimationPoolState.LOOKLEFT || ac.activeState == AnimationPoolState.LOOKRIGHT) ? true : false;
 	}
 	
 	

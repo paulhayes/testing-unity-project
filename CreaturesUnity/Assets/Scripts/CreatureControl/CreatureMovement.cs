@@ -64,7 +64,7 @@ public class CreatureMovement : MonoBehaviour
             // add them to the waypoints array
             waypoints.Add(child);
 			
-			Debug.Log("Added " + child.position);
+			//Debug.Log("Added " + child.position);
         }
 		
 	}

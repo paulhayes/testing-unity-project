@@ -145,6 +145,8 @@ public class SkeletonManager : MonoBehaviour {
 					
 					cube.GetComponent<MeshRenderer>().enabled = false;
 					
+					cube.name = KinectJointIDLUT[(int)skeleton.Joints[i].ID];
+					
 					cubeSkeleton[i] = cube;
 					
 	            }
@@ -193,7 +195,7 @@ public class SkeletonManager : MonoBehaviour {
                     cubes[i].transform.position += (v3pos - cubes[i].transform.position ) * kinectScale;
 					
 					
-					cubes[i].name = KinectJointIDLUT[(int)skeleton.Joints[i].ID];
+					//cubes[i].name = KinectJointIDLUT[(int)skeleton.Joints[i].ID];
                 }
             }
 			

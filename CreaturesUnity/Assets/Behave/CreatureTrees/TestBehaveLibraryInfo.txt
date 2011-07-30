@@ -9,6 +9,7 @@ Trees:
 	Standing_TransitionToStanding
 	Standing_TransitionToWalking
 	Standing_Attackstance
+	Standing_TransitionToAttack
 	Unknown
 
 Contexts:
@@ -23,7 +24,7 @@ Actions (3: 1 - 4):
 	MoveToLocation (3)
 	Unknown (4)
 
-Decorators (7: 5 - 12):
+Decorators (9: 5 - 14):
 	ShouldSit (5)
 	ShouldStand (6)
 	ShouldCommunicate (7)
@@ -31,6 +32,8 @@ Decorators (7: 5 - 12):
 	ShouldWalk (9)
 	ShouldAttack (10)
 	CheckIsntActiveState (11)
-	Unknown (12)
+	ShouldLook (12)
+	LookDirection (13)
+	Unknown (14)
 
 Agent classes:

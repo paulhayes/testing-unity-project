@@ -39,6 +39,13 @@ public class CreatureController : MonoBehaviour
 		
 	}
 	
+	public void NewUserAppeared(Transform t)
+	{
+		int index = getIndexToClosestCreature(transform.position.x);
+		
+		LookToUser(index, t);
+	}
+	
 	
 	public void UpdatedSkeletonPosition(float x){
 	
@@ -50,9 +57,30 @@ public class CreatureController : MonoBehaviour
 			
 			float val = Vector2.Distance(new Vector2(x, 0), new Vector2(creatures[i].transform.position.x, 0));
 			
+			if( val <= dist )
+			{	
+				dist = val;
+				index = i;	
+			}
+		}
+		
+		
+		if(dist < 2)
+		{
+			MoveYouFucker(index);
+		}
+	}
+	
+	
+	int getIndexToClosestCreature(float x){
+		
+		float dist = 1000000.0f;
+		
+		int index = 0;
+		
+		for(int i = 0; i < creatures.Length; i++){
 			
-			Debug.Log(val);
-			
+			float val = Vector2.Distance(new Vector2(x, 0), new Vector2(creatures[i].transform.position.x, 0));
 			
 			if( val <= dist )
 			{	
@@ -61,10 +89,7 @@ public class CreatureController : MonoBehaviour
 			}
 		}
 		
-		if(dist < 2)
-		{
-			MoveYouFucker(index);
-		}
+		return index;
 		
 	}
 	
@@ -78,6 +103,14 @@ public class CreatureController : MonoBehaviour
 	void MoveYouFucker(int number){
 		FirstBehaviourTree fbt = (FirstBehaviourTree)creatures[number].GetComponent<FirstBehaviourTree>();
 		fbt.MoveToNewTarget(targets[Random.Range(0, targets.Count)]);
+		
+	}
+	
+	
+	void LookToUser(int number, Transform t){
+		
+		FirstBehaviourTree fbt = (FirstBehaviourTree)creatures[number].GetComponent<FirstBehaviourTree>();
+		fbt.LookToNewUser(t);
 		
 	}
 

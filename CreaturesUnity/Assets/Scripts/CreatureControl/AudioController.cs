@@ -36,6 +36,8 @@ public class AudioController : MonoBehaviour {
 				
 				a.pitch = Random.Range(0.8f, 1.3f);
 				
+				//Debug.Log("Audio file played " + s);
+				
 				a.Play();
 				
 				toldToPlay = true;
